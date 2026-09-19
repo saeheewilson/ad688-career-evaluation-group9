@@ -1,0 +1,21 @@
+[project]
+name = "ad688-career-evaluation-group9"
+version = "0.0.1"
+description = ""
+authors = [
+    {name = "Sae Hee Wilson",email = "326301244+saeheewilson@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "numpy (>=2.5.3,<3.0.0)",
+    "pandas (>=3.0.6,<4.0.0)",
+    "matplotlib (>=3.11.2,<4.0.0)",
+    "seaborn (>=0.13.2,<0.14.0)",
+    "plotly (>=7.1.0,<8.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
