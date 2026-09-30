@@ -1,7 +1,27 @@
 ---
-title: "website"
+title: "Career Opportunities in Software Publishing"
 ---
 
-This is a Quarto website.
+## About the Project
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+
+## Our Project Question
+
+## Project Scope
+
+
+
+
+## What We Will Analyze
+
+
+## Expected Outcomes'
+
+
+## Our Team
+
+- Dylan Thomson
+- Sae Hee Wilson
+- Richard Wu
+
