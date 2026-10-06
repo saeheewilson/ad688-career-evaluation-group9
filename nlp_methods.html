@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Career Opportunities in Software Publishing – Software Publishers Career Evaluation</title>
+<title>NLP Methods – Software Publishers Career Evaluation</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -96,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -120,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Predictive Modeling</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./nlp_methods.html"> 
+    <a class="nav-link active" href="./nlp_methods.html" aria-current="page"> 
 <span class="menu-text">NLP Methods</span></a>
   </li>  
   <li class="nav-item">
@@ -143,13 +143,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#about-the-project" id="toc-about-the-project" class="nav-link active" data-scroll-target="#about-the-project">About the Project</a></li>
-  <li><a href="#our-project-question" id="toc-our-project-question" class="nav-link" data-scroll-target="#our-project-question">Our Project Question</a></li>
-  <li><a href="#project-scope" id="toc-project-scope" class="nav-link" data-scroll-target="#project-scope">Project Scope</a></li>
-  <li><a href="#what-we-analyze" id="toc-what-we-analyze" class="nav-link" data-scroll-target="#what-we-analyze">What We Analyze</a></li>
-  <li><a href="#key-market-findings" id="toc-key-market-findings" class="nav-link" data-scroll-target="#key-market-findings">Key Market Findings</a></li>
-  <li><a href="#project-workflow" id="toc-project-workflow" class="nav-link" data-scroll-target="#project-workflow">Project Workflow</a></li>
-  <li><a href="#our-team" id="toc-our-team" class="nav-link" data-scroll-target="#our-team">Our Team</a></li>
+  <li><a href="#natural-language-processing-methods" id="toc-natural-language-processing-methods" class="nav-link active" data-scroll-target="#natural-language-processing-methods">Natural Language Processing Methods</a>
+  <ul class="collapse">
+  <li><a href="#planned-nlp-analysis" id="toc-planned-nlp-analysis" class="nav-link" data-scroll-target="#planned-nlp-analysis">Planned NLP Analysis</a></li>
+  <li><a href="#current-application" id="toc-current-application" class="nav-link" data-scroll-target="#current-application">Current Application</a></li>
+  <li><a href="#potential-methods" id="toc-potential-methods" class="nav-link" data-scroll-target="#potential-methods">Potential Methods</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -158,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Career Opportunities in Software Publishing</h1>
+<h1 class="title">NLP Methods</h1>
 </div>
 
 
@@ -175,74 +174,41 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="about-the-project" class="level2">
-<h2 class="anchored" data-anchor-id="about-the-project">About the Project</h2>
-<p>This project evaluates career opportunities for <strong>Data Scientists within the Software Publishers industry (NAICS 5132)</strong>. The goal is to create a practical career-evaluation product that helps students and early-career professionals understand the market, identify important skills, and determine where additional skill development may improve career readiness.</p>
-<p>Our analysis uses job-posting data to examine employer demand, compensation, geography, experience, education, remote-work patterns, and technical skills.</p>
-</section>
-<section id="our-project-question" class="level2">
-<h2 class="anchored" data-anchor-id="our-project-question">Our Project Question</h2>
-<p><strong>What does the current job market look like for Data Scientists within the Software Publishers industry, and which skills should students prioritize to improve their career readiness for these opportunities?</strong></p>
-</section>
-<section id="project-scope" class="level2">
-<h2 class="anchored" data-anchor-id="project-scope">Project Scope</h2>
+<section id="natural-language-processing-methods" class="level1">
+<h1>Natural Language Processing Methods</h1>
+<section id="planned-nlp-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="planned-nlp-analysis">Planned NLP Analysis</h2>
+<p>Job postings contain substantial unstructured text, particularly within job titles, descriptions, and skill fields. Natural Language Processing (NLP) methods can be used to convert this text into structured information that supports career-market analysis.</p>
+<p>For this project, potential NLP applications include:</p>
 <ul>
-<li><strong>Career Pathway:</strong> Data Scientist</li>
-<li><strong>Industry:</strong> Software Publishers</li>
-<li><strong>NAICS Code:</strong> 5132</li>
-<li><strong>Primary Analysis Window:</strong> May–September 2024</li>
-<li><strong>Final Enhanced Dataset:</strong> 1,016 cleaned postings</li>
-<li><strong>Unique Employers:</strong> 174</li>
-</ul>
-<p>The enhanced analytical dataset is restricted to Software Publishers and postings classified within the <strong>Data Scientists</strong> occupation. Staffing-agency postings and duplicate records were removed before analysis.</p>
-</section>
-<section id="what-we-analyze" class="level2">
-<h2 class="anchored" data-anchor-id="what-we-analyze">What We Analyze</h2>
-<p>The project examines:</p>
-<ul>
-<li>job-posting activity over time;</li>
-<li>leading employers and hiring locations;</li>
-<li>salary distributions;</li>
-<li>experience requirements;</li>
-<li>education requirements;</li>
-<li>remote and hybrid work patterns;</li>
-<li>skills most frequently requested by employers; and</li>
-<li>gaps between employer skill demand and current team proficiency.</li>
+<li>extracting frequently requested skills from job postings;</li>
+<li>identifying recurring technical tools and competencies;</li>
+<li>grouping similar skills and terminology;</li>
+<li>analyzing common language used across job titles and descriptions; and</li>
+<li>comparing employer skill demand with team skill proficiency.</li>
 </ul>
 </section>
-<section id="key-market-findings" class="level2">
-<h2 class="anchored" data-anchor-id="key-market-findings">Key Market Findings</h2>
-<p>Our exploratory analysis identified several notable patterns:</p>
-<ul>
-<li><strong>Oracle</strong> is the largest employer represented in the dataset, with 392 postings.</li>
-<li><strong>California</strong> has the largest number of postings, followed by Illinois and Massachusetts.</li>
-<li>Among postings with usable compensation data, the <strong>median annual salary midpoint is approximately $132,550</strong>.</li>
-<li>Among postings reporting experience requirements, the <strong>median minimum requirement is 5 years</strong>.</li>
-<li>A <strong>bachelor’s degree</strong> is the most common explicitly listed education level.</li>
-<li><strong>SQL, Python, and Tableau</strong> are among the most frequently observed technical skills included in our career-readiness comparison.</li>
-<li>Communication and other professional skills also appear frequently, emphasizing that technical ability alone does not define career readiness.</li>
-</ul>
+<section id="current-application" class="level2">
+<h2 class="anchored" data-anchor-id="current-application">Current Application</h2>
+<p>The current analysis uses standardized skill fields from the job-posting dataset to identify frequently requested skills. This provides a structured starting point for the Skill Gap Analysis.</p>
+<p>Future NLP work can expand this analysis by examining the full text of job descriptions rather than relying exclusively on standardized skill classifications.</p>
 </section>
-<section id="project-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="project-workflow">Project Workflow</h2>
-<p>The project progresses through four major analytical stages:</p>
-<ol type="1">
-<li><strong>Project Framing</strong> — define the Data Scientist pathway and Software Publishers industry scope.</li>
-<li><strong>Data Preparation and EDA</strong> — collect, filter, clean, and analyze job-market data.</li>
-<li><strong>Skill Gap Analysis</strong> — compare employer skill demand with team proficiency.</li>
-<li><strong>Career Evaluation and Recommendations</strong> — translate the findings into practical career-development guidance.</li>
-</ol>
-<p>Use the navigation above to explore the project methodology, exploratory analysis, skill-gap analysis, and later analytical components.</p>
-</section>
-<section id="our-team" class="level2">
-<h2 class="anchored" data-anchor-id="our-team">Our Team</h2>
+<section id="potential-methods" class="level2">
+<h2 class="anchored" data-anchor-id="potential-methods">Potential Methods</h2>
+<p>Possible methods for later stages of the project include:</p>
 <ul>
-<li>Dylan Thomson</li>
-<li>Sae Hee Wilson</li>
-<li>Richard Wu</li>
+<li>text preprocessing and normalization;</li>
+<li>tokenization;</li>
+<li>frequency analysis;</li>
+<li>n-gram analysis;</li>
+<li>TF-IDF;</li>
+<li>keyword extraction; and</li>
+<li>clustering or similarity analysis of job-posting text.</li>
 </ul>
+<p>These methods could help identify patterns in employer expectations that are not fully represented by the structured variables in the dataset.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/career_plan.html</loc>
+    <lastmod>2026-10-06T23:34:05.586Z</lastmod>
+  </url>
+  <url>
     <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/about.html</loc>
-    <lastmod>2026-10-05T18:08:20.931Z</lastmod>
+    <lastmod>2026-10-06T23:34:05.586Z</lastmod>
+  </url>
+  <url>
+    <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/introduction.html</loc>
+    <lastmod>2026-10-06T23:34:05.590Z</lastmod>
   </url>
   <url>
     <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/notebooks/pull_data.html</loc>
-    <lastmod>2026-10-05T18:08:20.931Z</lastmod>
+    <lastmod>2026-10-06T23:34:05.591Z</lastmod>
+  </url>
+  <url>
+    <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/nlp_methods.html</loc>
+    <lastmod>2026-10-06T23:34:05.590Z</lastmod>
+  </url>
+  <url>
+    <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/ml_methods.html</loc>
+    <lastmod>2026-10-06T23:34:05.590Z</lastmod>
+  </url>
+  <url>
+    <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/data_cleaning.html</loc>
+    <lastmod>2026-10-06T23:34:05.590Z</lastmod>
   </url>
   <url>
     <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/index.html</loc>
-    <lastmod>2026-10-05T18:08:20.931Z</lastmod>
+    <lastmod>2026-10-06T23:34:05.590Z</lastmod>
+  </url>
+  <url>
+    <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/skill_gap_analysis.html</loc>
+    <lastmod>2026-10-06T23:34:05.592Z</lastmod>
+  </url>
+  <url>
+    <loc>https://saeheewilson.github.io/ad688-career-evaluation-group9/eda.html</loc>
+    <lastmod>2026-10-06T23:34:05.590Z</lastmod>
   </url>
 </urlset>

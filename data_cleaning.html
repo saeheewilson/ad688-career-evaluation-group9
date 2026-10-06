@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Career Opportunities in Software Publishing – Software Publishers Career Evaluation</title>
+<title>Data Preparation – Software Publishers Career Evaluation</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -96,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -104,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Project Overview</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./data_cleaning.html"> 
+    <a class="nav-link active" href="./data_cleaning.html" aria-current="page"> 
 <span class="menu-text">Data Preparation</span></a>
   </li>  
   <li class="nav-item">
@@ -143,13 +143,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#about-the-project" id="toc-about-the-project" class="nav-link active" data-scroll-target="#about-the-project">About the Project</a></li>
-  <li><a href="#our-project-question" id="toc-our-project-question" class="nav-link" data-scroll-target="#our-project-question">Our Project Question</a></li>
-  <li><a href="#project-scope" id="toc-project-scope" class="nav-link" data-scroll-target="#project-scope">Project Scope</a></li>
-  <li><a href="#what-we-analyze" id="toc-what-we-analyze" class="nav-link" data-scroll-target="#what-we-analyze">What We Analyze</a></li>
-  <li><a href="#key-market-findings" id="toc-key-market-findings" class="nav-link" data-scroll-target="#key-market-findings">Key Market Findings</a></li>
-  <li><a href="#project-workflow" id="toc-project-workflow" class="nav-link" data-scroll-target="#project-workflow">Project Workflow</a></li>
-  <li><a href="#our-team" id="toc-our-team" class="nav-link" data-scroll-target="#our-team">Our Team</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link active" data-scroll-target="#data-preparation">Data Preparation</a>
+  <ul class="collapse">
+  <li><a href="#scope-and-filtering-strategy" id="toc-scope-and-filtering-strategy" class="nav-link" data-scroll-target="#scope-and-filtering-strategy">Scope and Filtering Strategy</a></li>
+  <li><a href="#data-pipeline" id="toc-data-pipeline" class="nav-link" data-scroll-target="#data-pipeline">Data Pipeline</a></li>
+  <li><a href="#core-variables" id="toc-core-variables" class="nav-link" data-scroll-target="#core-variables">Core Variables</a></li>
+  <li><a href="#cleaning-decisions" id="toc-cleaning-decisions" class="nav-link" data-scroll-target="#cleaning-decisions">Cleaning Decisions</a>
+  <ul class="collapse">
+  <li><a href="#duplicates" id="toc-duplicates" class="nav-link" data-scroll-target="#duplicates">Duplicates</a></li>
+  <li><a href="#staffing-agencies" id="toc-staffing-agencies" class="nav-link" data-scroll-target="#staffing-agencies">Staffing Agencies</a></li>
+  <li><a href="#salary" id="toc-salary" class="nav-link" data-scroll-target="#salary">Salary</a></li>
+  <li><a href="#location" id="toc-location" class="nav-link" data-scroll-target="#location">Location</a></li>
+  <li><a href="#remote-status" id="toc-remote-status" class="nav-link" data-scroll-target="#remote-status">Remote Status</a></li>
+  <li><a href="#experience" id="toc-experience" class="nav-link" data-scroll-target="#experience">Experience</a></li>
+  <li><a href="#education" id="toc-education" class="nav-link" data-scroll-target="#education">Education</a></li>
+  <li><a href="#skills" id="toc-skills" class="nav-link" data-scroll-target="#skills">Skills</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">Missing Values</a></li>
+  <li><a href="#outliers-and-inconsistent-labels" id="toc-outliers-and-inconsistent-labels" class="nav-link" data-scroll-target="#outliers-and-inconsistent-labels">Outliers and Inconsistent Labels</a></li>
+  </ul></li>
+  <li><a href="#enhanced-dataset-for-module-3" id="toc-enhanced-dataset-for-module-3" class="nav-link" data-scroll-target="#enhanced-dataset-for-module-3">Enhanced Dataset for Module 3</a></li>
+  <li><a href="#data-coverage-and-limitations" id="toc-data-coverage-and-limitations" class="nav-link" data-scroll-target="#data-coverage-and-limitations">Data Coverage and Limitations</a></li>
+  <li><a href="#exported-outputs" id="toc-exported-outputs" class="nav-link" data-scroll-target="#exported-outputs">Exported Outputs</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -158,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Career Opportunities in Software Publishing</h1>
+<h1 class="title">Data Preparation</h1>
 </div>
 
 
@@ -175,74 +190,154 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="about-the-project" class="level2">
-<h2 class="anchored" data-anchor-id="about-the-project">About the Project</h2>
-<p>This project evaluates career opportunities for <strong>Data Scientists within the Software Publishers industry (NAICS 5132)</strong>. The goal is to create a practical career-evaluation product that helps students and early-career professionals understand the market, identify important skills, and determine where additional skill development may improve career readiness.</p>
-<p>Our analysis uses job-posting data to examine employer demand, compensation, geography, experience, education, remote-work patterns, and technical skills.</p>
-</section>
-<section id="our-project-question" class="level2">
-<h2 class="anchored" data-anchor-id="our-project-question">Our Project Question</h2>
-<p><strong>What does the current job market look like for Data Scientists within the Software Publishers industry, and which skills should students prioritize to improve their career readiness for these opportunities?</strong></p>
-</section>
-<section id="project-scope" class="level2">
-<h2 class="anchored" data-anchor-id="project-scope">Project Scope</h2>
+<section id="data-preparation" class="level1">
+<h1>Data Preparation</h1>
+<section id="scope-and-filtering-strategy" class="level2">
+<h2 class="anchored" data-anchor-id="scope-and-filtering-strategy">Scope and Filtering Strategy</h2>
+<p>The analytical dataset is restricted to the team’s selected industry and career pathway:</p>
 <ul>
-<li><strong>Career Pathway:</strong> Data Scientist</li>
 <li><strong>Industry:</strong> Software Publishers</li>
-<li><strong>NAICS Code:</strong> 5132</li>
-<li><strong>Primary Analysis Window:</strong> May–September 2024</li>
-<li><strong>Final Enhanced Dataset:</strong> 1,016 cleaned postings</li>
-<li><strong>Unique Employers:</strong> 174</li>
+<li><strong>NAICS:</strong> 5132</li>
+<li><strong>Career Pathway:</strong> Data Scientist</li>
 </ul>
-<p>The enhanced analytical dataset is restricted to Software Publishers and postings classified within the <strong>Data Scientists</strong> occupation. Staffing-agency postings and duplicate records were removed before analysis.</p>
-</section>
-<section id="what-we-analyze" class="level2">
-<h2 class="anchored" data-anchor-id="what-we-analyze">What We Analyze</h2>
-<p>The project examines:</p>
+<p>The MET Career Compass API was queried using NAICS 5132. The initial API pull returned <strong>4,641 unique job postings</strong>.</p>
+<p>To identify postings relevant to the Data Scientist pathway, job titles were normalized and searched for terms associated with Data Scientist and closely related AI/ML roles. These included:</p>
 <ul>
-<li>job-posting activity over time;</li>
-<li>leading employers and hiring locations;</li>
-<li>salary distributions;</li>
-<li>experience requirements;</li>
-<li>education requirements;</li>
-<li>remote and hybrid work patterns;</li>
-<li>skills most frequently requested by employers; and</li>
-<li>gaps between employer skill demand and current team proficiency.</li>
+<li>Data Scientist</li>
+<li>Machine Learning Scientist</li>
+<li>Applied Scientist</li>
+<li>Research Scientist</li>
+<li>Machine Learning Engineer</li>
+<li>ML Engineer</li>
+<li>AI Engineer</li>
 </ul>
+<p>This filtering approach was intentionally kept narrow so that the final dataset would remain aligned with the selected Data Scientist career pathway rather than expanding into unrelated analytical or software roles.</p>
 </section>
-<section id="key-market-findings" class="level2">
-<h2 class="anchored" data-anchor-id="key-market-findings">Key Market Findings</h2>
-<p>Our exploratory analysis identified several notable patterns:</p>
-<ul>
-<li><strong>Oracle</strong> is the largest employer represented in the dataset, with 392 postings.</li>
-<li><strong>California</strong> has the largest number of postings, followed by Illinois and Massachusetts.</li>
-<li>Among postings with usable compensation data, the <strong>median annual salary midpoint is approximately $132,550</strong>.</li>
-<li>Among postings reporting experience requirements, the <strong>median minimum requirement is 5 years</strong>.</li>
-<li>A <strong>bachelor’s degree</strong> is the most common explicitly listed education level.</li>
-<li><strong>SQL, Python, and Tableau</strong> are among the most frequently observed technical skills included in our career-readiness comparison.</li>
-<li>Communication and other professional skills also appear frequently, emphasizing that technical ability alone does not define career readiness.</li>
-</ul>
-</section>
-<section id="project-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="project-workflow">Project Workflow</h2>
-<p>The project progresses through four major analytical stages:</p>
+<section id="data-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="data-pipeline">Data Pipeline</h2>
+<p>The project uses a staged Python pipeline:</p>
 <ol type="1">
-<li><strong>Project Framing</strong> — define the Data Scientist pathway and Software Publishers industry scope.</li>
-<li><strong>Data Preparation and EDA</strong> — collect, filter, clean, and analyze job-market data.</li>
-<li><strong>Skill Gap Analysis</strong> — compare employer skill demand with team proficiency.</li>
-<li><strong>Career Evaluation and Recommendations</strong> — translate the findings into practical career-development guidance.</li>
+<li><code>01_pull_data.py</code> retrieves Software Publishers job postings from the MET Career Compass API.</li>
+<li><code>02_filter_data_scientist.py</code> identifies Data Scientist and closely related AI/ML roles.</li>
+<li><code>03_clean_data.py</code> removes duplicate and staffing-agency records and creates cleaned analytical fields.</li>
+<li><code>04_skill_summary.py</code> summarizes selected technical skills.</li>
+<li><code>05_data_dictionary.py</code> creates a variable-description file.</li>
+<li><code>06_market_summary.py</code> produces baseline summary tables.</li>
 </ol>
-<p>Use the navigation above to explore the project methodology, exploratory analysis, skill-gap analysis, and later analytical components.</p>
+<p>The API pull returned <strong>4,641 unique postings</strong>. The career-pathway filter identified <strong>8 relevant postings</strong>, including direct Data Scientist titles and related AI/ML roles. One staffing-agency posting was removed during cleaning, resulting in a final analytical dataset of <strong>7 postings</strong>.</p>
 </section>
-<section id="our-team" class="level2">
-<h2 class="anchored" data-anchor-id="our-team">Our Team</h2>
+<section id="core-variables" class="level2">
+<h2 class="anchored" data-anchor-id="core-variables">Core Variables</h2>
+<p>The API provides fields related to:</p>
 <ul>
-<li>Dylan Thomson</li>
-<li>Sae Hee Wilson</li>
-<li>Richard Wu</li>
+<li>job title and normalized title;</li>
+<li>company and organization;</li>
+<li>posting date;</li>
+<li>city, state, and geographic identifiers;</li>
+<li>remote status;</li>
+<li>employment type;</li>
+<li>salary;</li>
+<li>SOC and O*NET occupation classifications;</li>
+<li>NAICS industry classification;</li>
+<li>skills;</li>
+<li>job description;</li>
+<li>education and work-related signals.</li>
 </ul>
+<p>The cleaned dataset retains the fields most directly related to the project’s market-baseline and skill-gap analyses.</p>
+</section>
+<section id="cleaning-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-decisions">Cleaning Decisions</h2>
+<section id="duplicates" class="level3">
+<h3 class="anchored" data-anchor-id="duplicates">Duplicates</h3>
+<p>Duplicate postings were removed using the unique <code>job_id</code> field.</p>
+</section>
+<section id="staffing-agencies" class="level3">
+<h3 class="anchored" data-anchor-id="staffing-agencies">Staffing Agencies</h3>
+<p>Records identified as staffing-agency postings were excluded from the final analytical dataset so that employer-level findings would more closely reflect direct hiring organizations.</p>
+</section>
+<section id="salary" class="level3">
+<h3 class="anchored" data-anchor-id="salary">Salary</h3>
+<p>Salary fields were converted to numeric values, and nonpositive salary values were treated as missing rather than as valid compensation observations. A salary midpoint was calculated as the average of the reported minimum and maximum salary when both values were available.</p>
+<p>In the enhanced dataset, usable salary midpoint information is available for <strong>684 of 1,016 postings</strong>. Salary values vary substantially across postings, so both the median and distribution are examined in the Exploratory Data Analysis.</p>
+</section>
+<section id="location" class="level3">
+<h3 class="anchored" data-anchor-id="location">Location</h3>
+<p>City and state fields were retained where available. Missing geographic values were classified as unknown rather than inferred. Geographic analysis focuses on reported state-level information to identify major employment markets.</p>
+</section>
+<section id="remote-status" class="level3">
+<h3 class="anchored" data-anchor-id="remote-status">Remote Status</h3>
+<p>Remote-work classifications were retained from the enhanced dataset. The final dataset contains <strong>190 Remote</strong>, <strong>31 Hybrid Remote</strong>, and <strong>7 Not Remote</strong> postings. Another <strong>788 postings</strong> have no identified remote classification.</p>
+<p>Missing remote classifications are treated as unspecified rather than assumed to represent onsite positions.</p>
+</section>
+<section id="experience" class="level3">
+<h3 class="anchored" data-anchor-id="experience">Experience</h3>
+<p>Minimum and maximum years of experience were converted to numeric fields where available. Minimum experience information is available for <strong>658 postings</strong>.</p>
+<p>Missing experience requirements were preserved rather than estimated.</p>
+</section>
+<section id="education" class="level3">
+<h3 class="anchored" data-anchor-id="education">Education</h3>
+<p>Education requirements were retained using the standardized education fields in the enhanced dataset. All 1,016 records contain an education classification, although <strong>408 postings explicitly report “No Education Listed.”</strong></p>
+<p>This distinction allows postings without a stated education requirement to remain separate from postings that explicitly require a degree.</p>
+</section>
+<section id="skills" class="level3">
+<h3 class="anchored" data-anchor-id="skills">Skills</h3>
+<p>Standardized skill fields were retained for the Skill Gap Analysis. The dataset includes overall skills as well as specialized and software-specific skill classifications.</p>
+<p>The skill lists were parsed into individual skills and counted across postings to measure employer demand. This allows frequently requested skills to be compared with the project team’s self-assessed proficiency.</p>
+</section>
+<section id="missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="missing-values">Missing Values</h3>
+<p>Missing values were preserved and explicitly reported rather than replaced with estimated values. This is especially important for salary, experience, geography, and remote-work information.</p>
+</section>
+<section id="outliers-and-inconsistent-labels" class="level3">
+<h3 class="anchored" data-anchor-id="outliers-and-inconsistent-labels">Outliers and Inconsistent Labels</h3>
+<p>Nonpositive salary values were treated as missing. Valid salary observations were retained even when unusually high or low because the postings span different employers, responsibilities, and seniority levels. The Exploratory Data Analysis therefore emphasizes the median in addition to the mean when interpreting compensation.</p>
+<p>Original job titles were also preserved because the standardized Data Scientists occupational classification includes a broad range of titles.</p>
+</section>
+</section>
+<section id="enhanced-dataset-for-module-3" class="level2">
+<h2 class="anchored" data-anchor-id="enhanced-dataset-for-module-3">Enhanced Dataset for Module 3</h2>
+<p>The initial API pipeline produced a very small career-specific sample: <strong>7 cleaned postings from 6 employers</strong>. While this process established a reproducible filtering and cleaning workflow, the sample was too limited to support meaningful comparisons of salary, geography, experience, education, and remote-work patterns.</p>
+<p>For the enhanced Module 3 analysis, the project uses the larger job-posting dataset provided for the assignment. The same industry and career scope is maintained using:</p>
+<ul>
+<li><strong>NAICS 5132:</strong> Software Publishers</li>
+<li><strong>SOC occupation:</strong> Data Scientists</li>
+</ul>
+<p>The industry and occupation filters initially identified <strong>1,037 postings</strong>. After removing <strong>21 staffing-agency postings</strong> and checking posting identifiers for duplicates, the final enhanced analytical dataset contains <strong>1,016 postings from 174 employers</strong>.</p>
+<p>The postings cover <strong>May 1 through September 30, 2024</strong>.</p>
+<p>The enhanced dataset provides substantially better coverage for the variables required for market analysis:</p>
+<ul>
+<li><strong>684 postings</strong> contain usable salary midpoint information;</li>
+<li><strong>658 postings</strong> contain minimum experience requirements;</li>
+<li>all <strong>1,016 postings</strong> contain an education classification, including records explicitly classified as having no education listed;</li>
+<li>remote-work classifications distinguish Remote, Hybrid Remote, Not Remote, and unspecified records;</li>
+<li>city and state fields support geographic analysis; and</li>
+<li>standardized skill fields support employer-demand and skill-gap analysis.</li>
+</ul>
+<p>The enhanced dataset is therefore used as the <strong>primary analytical dataset for the Exploratory Data Analysis and Skill Gap Analysis</strong>, while the original API workflow documents the project’s initial data-acquisition and filtering process.</p>
+</section>
+<section id="data-coverage-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="data-coverage-and-limitations">Data Coverage and Limitations</h2>
+<p>Although the enhanced dataset provides much stronger coverage than the original API sample, several limitations remain.</p>
+<p>First, all 1,016 postings are classified as <strong>Data Scientists</strong> through the SOC field, but their raw job titles vary considerably. The sample includes analytics, artificial intelligence, consulting, implementation, business intelligence, and other related roles. Results therefore describe the broader occupational market represented by the Data Scientists classification rather than only jobs whose titles explicitly contain “Data Scientist.”</p>
+<p>Second, the dataset covers only <strong>five months in 2024</strong>, so changes in posting volume should not be interpreted as long-term employment trends.</p>
+<p>Third, salary and experience information are not available for every posting. Remote-work information is particularly incomplete because most postings do not contain an identified remote classification.</p>
+<p>Finally, employer representation is uneven. Some organizations, particularly Oracle, contribute a large number of postings. Aggregate results may therefore reflect the hiring patterns of the largest employers in the sample.</p>
+</section>
+<section id="exported-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="exported-outputs">Exported Outputs</h2>
+<p>The project generates and uses the following analytical outputs:</p>
+<ul>
+<li><code>data/processed/data_scientist_software_publishers.csv</code> — cleaned output from the initial API pipeline;</li>
+<li><code>data/processed/data_dictionary.csv</code> — variable descriptions from the initial pipeline;</li>
+<li><code>data/processed/skill_summary.csv</code> — initial technical-skill summary;</li>
+<li><code>data/module3/data_scientist_software_publishers_clean.csv</code> — enhanced 1,016-posting analytical dataset;</li>
+<li><code>data/module3/top20_market_skills.csv</code> — most frequently requested employer skills; and</li>
+<li><code>data/module3/team_skill_market_demand.csv</code> — employer demand for the technical skills used in the team comparison.</li>
+</ul>
+<p>The large raw Module 3 dataset is kept out of version control. Analysis pages use the smaller filtered and processed outputs to reduce rendering time and avoid GitHub Pages issues.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
