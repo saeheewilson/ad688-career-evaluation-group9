@@ -4,24 +4,63 @@ title: "Career Opportunities in Software Publishing"
 
 ## About the Project
 
+This project evaluates career opportunities for **Data Scientists within the Software Publishers industry (NAICS 5132)**. The goal is to create a practical career-evaluation product that helps students and early-career professionals understand the market, identify important skills, and determine where additional skill development may improve career readiness.
 
+Our analysis uses job-posting data to examine employer demand, compensation, geography, experience, education, remote-work patterns, and technical skills.
 
 ## Our Project Question
 
+**What does the current job market look like for Data Scientists within the Software Publishers industry, and which skills should students prioritize to improve their career readiness for these opportunities?**
+
 ## Project Scope
 
+- **Career Pathway:** Data Scientist
+- **Industry:** Software Publishers
+- **NAICS Code:** 5132
+- **Primary Analysis Window:** May–September 2024
+- **Final Enhanced Dataset:** 1,016 cleaned postings
+- **Unique Employers:** 174
 
+The enhanced analytical dataset is restricted to Software Publishers and postings classified within the **Data Scientists** occupation. Staffing-agency postings and duplicate records were removed before analysis.
 
+## What We Analyze
 
-## What We Will Analyze
+The project examines:
 
+- job-posting activity over time;
+- leading employers and hiring locations;
+- salary distributions;
+- experience requirements;
+- education requirements;
+- remote and hybrid work patterns;
+- skills most frequently requested by employers; and
+- gaps between employer skill demand and current team proficiency.
 
-## Expected Outcomes'
+## Key Market Findings
 
+Our exploratory analysis identified several notable patterns:
+
+- **Oracle** is the largest employer represented in the dataset, with 392 postings.
+- **California** has the largest number of postings, followed by Illinois and Massachusetts.
+- Among postings with usable compensation data, the **median annual salary midpoint is approximately $132,550**.
+- Among postings reporting experience requirements, the **median minimum requirement is 5 years**.
+- A **bachelor's degree** is the most common explicitly listed education level.
+- **SQL, Python, and Tableau** are among the most frequently observed technical skills included in our career-readiness comparison.
+- Communication and other professional skills also appear frequently, emphasizing that technical ability alone does not define career readiness.
+
+## Project Workflow
+
+The project progresses through four major analytical stages:
+
+1. **Project Framing** — define the Data Scientist pathway and Software Publishers industry scope.
+2. **Data Preparation and EDA** — collect, filter, clean, and analyze job-market data.
+3. **Skill Gap Analysis** — compare employer skill demand with team proficiency.
+4. **Career Evaluation and Recommendations** — translate the findings into practical career-development guidance.
+
+Use the navigation above to explore the project methodology, exploratory analysis, skill-gap analysis, and later analytical components.
 
 ## Our Team
 
 - Dylan Thomson
 - Sae Hee Wilson
 - Richard Wu
-

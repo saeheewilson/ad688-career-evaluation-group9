@@ -22,8 +22,8 @@ longitude,0,7,100.0
 remote_status,7,0,0.0
 employment_type,5,2,28.6
 salary_text,7,0,0.0
-annual_salary_min,3,4,57.1
-annual_salary_max,3,4,57.1
+annual_salary_min,0,7,100.0
+annual_salary_max,0,7,100.0
 hourly_salary_min,0,7,100.0
 hourly_salary_max,0,7,100.0
 soc_code,7,0,0.0
@@ -109,5 +109,5 @@ organization.glassdoor.ratings.business_outlook,0,7,100.0
 role_group,7,0,0.0
 industry_verification,7,0,0.0
 staffing_flag,7,0,0.0
-annual_salary_midpoint,3,4,57.1
+annual_salary_midpoint,0,7,100.0
 remote_status_clean,7,0,0.0

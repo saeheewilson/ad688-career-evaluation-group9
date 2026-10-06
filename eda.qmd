@@ -1,0 +1,289 @@
+---
+title: "Exploratory Analysis"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+# Exploratory Data Analysis
+
+## Market Overview
+
+This analysis uses the enhanced Module 3 dataset to examine job postings classified under the **Data Scientists occupation** within **Software Publishers (NAICS 5132)**.
+
+After removing duplicate records and staffing-agency postings, the analytical dataset contains **1,016 postings from 174 employers**. The postings span **May through September 2024**.
+
+The occupational classification is broader than literal job titles. Although all observations are classified as Data Scientists in the dataset's SOC field, raw titles include data analytics, business intelligence, AI, consulting, implementation, and other related positions. Therefore, the results represent the broader Data Scientist occupational market captured by the dataset rather than only postings with "Data Scientist" in the title.
+
+```{python}
+#| label: setup
+#| include: false
+
+import pandas as pd
+import plotly.express as px
+
+DATA_PATH = "data/module3/data_scientist_software_publishers_clean.csv"
+
+df = pd.read_csv(DATA_PATH, low_memory=False)
+df["POSTED"] = pd.to_datetime(df["POSTED"], errors="coerce")
+
+PLOT_TEMPLATE = "plotly_white"
+```
+
+## Posting Activity Over Time
+
+The dataset covers a five-month period from May through September 2024.
+
+```{python}
+#| label: postings-over-time
+
+monthly = (
+    df.dropna(subset=["POSTED"])
+      .assign(month=lambda x: x["POSTED"].dt.to_period("M").astype(str))
+      .groupby("month")
+      .size()
+      .reset_index(name="Postings")
+)
+
+fig = px.bar(
+    monthly,
+    x="month",
+    y="Postings",
+    title="Data Scientist Postings by Month",
+    labels={"month": "Month"},
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False)
+fig.show()
+```
+
+Posting volume increased from **196 postings in May** to **291 in September**. Because the dataset covers only five months, this change should not be interpreted as evidence of a long-term labor-market trend.
+
+## Leading Employers
+
+The postings are concentrated among several large software companies.
+
+```{python}
+#| label: top-employers
+
+employers = (
+    df["COMPANY_NAME"]
+    .value_counts()
+    .head(10)
+    .sort_values()
+    .reset_index()
+)
+
+employers.columns = ["Employer", "Postings"]
+
+fig = px.bar(
+    employers,
+    x="Postings",
+    y="Employer",
+    orientation="h",
+    title="Top 10 Employers by Posting Volume",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False)
+fig.show()
+```
+
+**Oracle accounts for 392 postings**, the largest share in the dataset. Other leading employers include Scadea Solutions, Workday, Microsoft, Salesforce, SAP, and Adobe. Because Oracle contributes a substantial portion of the observations, aggregate market patterns may partly reflect that company's hiring activity.
+
+## Geographic Distribution
+
+The postings are distributed across several major technology and business markets.
+
+```{python}
+#| label: state-distribution
+
+states = (
+    df["STATE_NAME"]
+    .replace("Unknown", pd.NA)
+    .dropna()
+    .value_counts()
+    .head(10)
+    .sort_values()
+    .reset_index()
+)
+
+states.columns = ["State", "Postings"]
+
+fig = px.bar(
+    states,
+    x="Postings",
+    y="State",
+    orientation="h",
+    title="Top 10 States by Posting Volume",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False)
+fig.show()
+```
+
+**California** has the largest number of postings with **154**, followed by **Illinois (99)**, **Massachusetts (89)**, **Texas (76)**, and **New York (57)**. This indicates that Data Scientist-classified opportunities within Software Publishers are spread across several major employment markets rather than being concentrated in a single state.
+
+## Salary Distribution
+
+Salary information is available for **684 of the 1,016 postings**.
+
+```{python}
+#| label: salary-distribution
+
+salary = df.loc[
+    df["SALARY_MIDPOINT"].notna() &
+    (df["SALARY_MIDPOINT"] > 0),
+    "SALARY_MIDPOINT"
+]
+
+fig = px.histogram(
+    x=salary,
+    nbins=30,
+    title="Distribution of Annual Salary Midpoints",
+    labels={
+        "x": "Annual Salary Midpoint ($)",
+        "y": "Postings"
+    },
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False)
+fig.show()
+```
+
+Among postings with usable salary information, the **median annual salary midpoint is approximately $132,550**. The mean is approximately **$140,246**, while observed salary midpoints range from approximately **$18,720 to $500,000**.
+
+The wide range and high upper values suggest substantial variation in seniority and compensation. Because extreme values can influence the mean, the median provides a more stable description of typical compensation in this dataset.
+
+## Experience Requirements
+
+Minimum years of experience are available for **658 postings**.
+
+```{python}
+#| label: experience-distribution
+
+experience_counts = (
+    df["MIN_YEARS_EXPERIENCE"]
+    .dropna()
+    .value_counts()
+    .sort_index()
+    .reset_index()
+)
+
+experience_counts.columns = [
+    "Minimum Years",
+    "Postings"
+]
+
+fig = px.bar(
+    experience_counts,
+    x="Minimum Years",
+    y="Postings",
+    title="Minimum Years of Experience Required",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False)
+fig.show()
+```
+
+The **median minimum experience requirement is 5 years**, while the mean is approximately **6 years**. The middle 50% of postings with experience information require approximately **4 to 8 years** of experience.
+
+
+This suggests that a substantial portion of the observed Software Publishers market is oriented toward experienced candidates rather than exclusively entry-level applicants.
+
+## Remote Work
+
+The dataset also provides information about whether postings were identified as remote or hybrid.
+
+```{python}
+#| label: remote-work
+
+remote = (
+    df["REMOTE_TYPE_NAME"]
+    .value_counts()
+    .reset_index()
+)
+
+remote.columns = [
+    "Work Arrangement",
+    "Postings"
+]
+
+fig = px.bar(
+    remote,
+    x="Work Arrangement",
+    y="Postings",
+    title="Remote Work Classification",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False)
+fig.show()
+```
+
+The dataset contains **190 postings classified as Remote**, **31 as Hybrid Remote**, and **7 as Not Remote**. However, **788 postings are coded as `[None]`**, meaning that a work arrangement was not identified for most observations.
+
+The `[None]` category should be interpreted as missing or unspecified information rather than evidence that those positions require onsite work.
+
+## Education Requirements
+
+Education requirements vary across the postings, with a bachelor's degree representing the most common explicitly stated level.
+
+```{python}
+#| label: education
+
+education = (
+    df["EDUCATION_LEVELS_NAME"]
+    .value_counts()
+    .head(6)
+    .sort_values()
+    .reset_index()
+)
+
+education.columns = [
+    "Education Requirement",
+    "Postings"
+]
+
+education["Education Requirement"] = (
+    education["Education Requirement"]
+    .str.replace(r'[\[\]\n"]', "", regex=True)
+    .str.replace(",", " /", regex=False)
+    .str.strip()
+)
+
+fig = px.bar(
+    education,
+    x="Postings",
+    y="Education Requirement",
+    orientation="h",
+    title="Most Common Education Requirements",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False)
+fig.show()
+```
+
+A **bachelor's degree** is the most common explicitly listed education requirement, appearing as the sole listed level in **464 postings**. Another **100 postings** list both bachelor's and master's degrees, while **408 postings** report no listed education requirement.
+
+This indicates that bachelor's-level education is prominent among postings that specify education, while a sizable portion of employers do not explicitly state an education requirement.
+
+## Key Takeaways
+
+The exploratory analysis establishes several important characteristics of the Data Scientist occupational market within Software Publishers:
+
+- The cleaned dataset contains **1,016 postings from 174 employers** between May and September 2024.
+- Posting volume is heavily influenced by several large software employers, particularly Oracle.
+- **California, Illinois, and Massachusetts** have the largest numbers of postings in the dataset.
+- The median annual salary midpoint is approximately **$132,550** among the 684 postings with usable salary information.
+- The median minimum experience requirement is **5 years** among postings with reported experience requirements.
+- A **bachelor's degree** is the most common explicitly stated education level.
+- Remote opportunities are present, but missing remote-status information prevents a complete remote-versus-onsite comparison.
+
+These findings provide the market baseline for the next stage of the project: comparing the skills demanded by employers with the current skills of the project team in the **Skill Gap Analysis**.

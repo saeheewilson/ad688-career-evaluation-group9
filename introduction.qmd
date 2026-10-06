@@ -1,0 +1,59 @@
+---
+title: "Project Overview"
+bibliography: references.bib
+format:
+  html:
+    toc: true
+---
+
+# Project Overview
+
+## Career Pathway and Industry Scope
+
+This project evaluates career opportunities for **Data Scientists** within the **Software Publishers industry (NAICS 5132)**. The analysis is intentionally limited to this industry and career pathway so that the final product provides focused, decision-oriented guidance rather than a broad overview of the entire labor market.
+
+Software publishers are a relevant setting for data science careers because software companies increasingly rely on large-scale data, machine learning, artificial intelligence, experimentation, and analytics to develop products and improve business decisions. The U.S. Census Bureau classifies Software Publishers under NAICS 5132, with the detailed 2022 industry code 513210 @census2022naics.
+
+## Product Question
+
+**What does the current job market look like for Data Scientists and closely related AI/ML roles within the Software Publishers industry, and which skills should students prioritize to improve their career readiness for these opportunities?**
+
+## Target User
+
+The primary user of this career evaluation product is a student or early-career professional interested in pursuing a Data Scientist career in the software industry. The product is designed to help that user understand job-market demand, salary and location patterns, common technical skills, and potential skill gaps.
+
+## Project Rationale
+
+Data science remains a high-growth occupation as organizations continue to increase their use of data-driven decision making and artificial intelligence. The U.S. Bureau of Labor Statistics projects substantially faster-than-average employment growth for Data Scientists and identifies the expanding use of AI and large-scale data as major drivers of demand @bls2026datascientists.
+
+The role also requires a broad combination of analytical, programming, modeling, and communication capabilities. O*NET describes Data Scientists as professionals who use programming, data mining, machine learning, natural language processing, modeling, and visualization to transform large datasets into useful information @onet2026datascientists. Because these requirements span multiple technical areas, students benefit from understanding which capabilities appear most frequently in real job postings rather than relying only on generic career descriptions.
+
+Software publishing provides an especially relevant environment for this analysis because companies in this industry develop and distribute software products and are positioned to make extensive use of AI, machine learning, and data-intensive technologies @census2022naics. Examining this industry therefore provides a focused way to evaluate the opportunities and skill expectations facing aspiring Data Scientists.
+
+## Brief Literature Review
+
+Existing labor-market resources consistently emphasize both strong demand for Data Scientists and the multidisciplinary nature of the occupation. The Bureau of Labor Statistics identifies Data Scientists as a rapidly growing occupation and attributes this growth to increased demand for data analysis and AI-enabled business processes @bls2026datascientists.
+
+O*NET similarly characterizes the occupation around statistical analysis, programming, machine learning, data modeling, visualization, and interpretation of structured and unstructured data @onet2026datascientists. These occupational definitions provide a useful benchmark for evaluating whether the skills observed in Software Publisher job postings align with broader expectations for the profession.
+
+Industry classification also matters because labor-market requirements can vary across sectors. The Census Bureau defines Software Publishers as organizations primarily engaged in producing and distributing computer software, including related design, documentation, installation, and support activities @census2022naics. This makes Software Publishers an appropriate industry scope for evaluating technology-intensive Data Scientist opportunities.
+
+Together, these sources support a career-evaluation approach that combines occupational benchmarks with real job-posting evidence. Our analysis therefore focuses on actual postings from the MET Career Compass dataset to evaluate demand, compensation, geography, work arrangement, and skill requirements specifically within Software Publishers.
+
+## What We Expect to Explore
+
+The project will examine:
+
+- the volume and types of Data Scientist and closely related AI/ML roles;
+- salary patterns where compensation data are available;
+- employer and geographic patterns;
+- remote, hybrid, and onsite work arrangements where available;
+- commonly requested technical skills;
+- experience and education requirements when those fields can be identified;
+- gaps between market-required skills and the current skills of team members.
+
+## Data Source
+
+Job-posting data are obtained from the **MET Career Compass API** and filtered to the team's selected Software Publishers industry scope and Data Scientist career pathway. The analytical pipeline filters, cleans, and summarizes the postings before they are used in the exploratory and skill-gap analyses.
+
+## References

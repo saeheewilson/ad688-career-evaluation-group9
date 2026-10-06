@@ -72,6 +72,7 @@ for column in ["annual_salary_min", "annual_salary_max"]:
             clean_df[column],
             errors="coerce",
         )
+        clean_df.loc[clean_df[column] <= 0, column] = pd.NA
 
 if {
     "annual_salary_min",

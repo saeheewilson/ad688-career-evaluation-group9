@@ -222,3 +222,12 @@ __marimo__/
 
 
 data
+# Keep raw/large data ignored, but track processed Module 3 analysis files
+!data/
+data/*
+!data/module3/
+data/module3/*
+!data/module3/data_scientist_software_publishers_clean.csv
+!data/module3/top20_market_skills.csv
+!data/module3/team_skill_market_demand.csv
+!data/module3/team_skill_ratings.csv

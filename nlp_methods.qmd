@@ -1,0 +1,40 @@
+---
+title: "NLP Methods"
+format:
+  html:
+    toc: true
+---
+
+# Natural Language Processing Methods
+
+## Planned NLP Analysis
+
+Job postings contain substantial unstructured text, particularly within job titles, descriptions, and skill fields. Natural Language Processing (NLP) methods can be used to convert this text into structured information that supports career-market analysis.
+
+For this project, potential NLP applications include:
+
+- extracting frequently requested skills from job postings;
+- identifying recurring technical tools and competencies;
+- grouping similar skills and terminology;
+- analyzing common language used across job titles and descriptions; and
+- comparing employer skill demand with team skill proficiency.
+
+## Current Application
+
+The current analysis uses standardized skill fields from the job-posting dataset to identify frequently requested skills. This provides a structured starting point for the Skill Gap Analysis.
+
+Future NLP work can expand this analysis by examining the full text of job descriptions rather than relying exclusively on standardized skill classifications.
+
+## Potential Methods
+
+Possible methods for later stages of the project include:
+
+- text preprocessing and normalization;
+- tokenization;
+- frequency analysis;
+- n-gram analysis;
+- TF-IDF;
+- keyword extraction; and
+- clustering or similarity analysis of job-posting text.
+
+These methods could help identify patterns in employer expectations that are not fully represented by the structured variables in the dataset.

@@ -45,7 +45,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7c0f67eba7e864f644f943ef9a6fd48f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-66b905eaf8fd7b3c0ab794c947ff3da0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -100,8 +100,32 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./introduction.qmd"> 
+    <a class="nav-link" href="./introduction.html"> 
 <span class="menu-text">Project Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html"> 
+<span class="menu-text">Data Preparation</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./eda.html"> 
+<span class="menu-text">Exploratory Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./skill_gap_analysis.html"> 
+<span class="menu-text">Skill Gap Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ml_methods.html"> 
+<span class="menu-text">Predictive Modeling</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./nlp_methods.html"> 
+<span class="menu-text">NLP Methods</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./career_plan.html"> 
+<span class="menu-text">Career Strategy</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -122,8 +146,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#about-the-project" id="toc-about-the-project" class="nav-link active" data-scroll-target="#about-the-project">About the Project</a></li>
   <li><a href="#our-project-question" id="toc-our-project-question" class="nav-link" data-scroll-target="#our-project-question">Our Project Question</a></li>
   <li><a href="#project-scope" id="toc-project-scope" class="nav-link" data-scroll-target="#project-scope">Project Scope</a></li>
-  <li><a href="#what-we-will-analyze" id="toc-what-we-will-analyze" class="nav-link" data-scroll-target="#what-we-will-analyze">What We Will Analyze</a></li>
-  <li><a href="#expected-outcomes" id="toc-expected-outcomes" class="nav-link" data-scroll-target="#expected-outcomes">Expected Outcomes’</a></li>
+  <li><a href="#what-we-analyze" id="toc-what-we-analyze" class="nav-link" data-scroll-target="#what-we-analyze">What We Analyze</a></li>
+  <li><a href="#key-market-findings" id="toc-key-market-findings" class="nav-link" data-scroll-target="#key-market-findings">Key Market Findings</a></li>
+  <li><a href="#project-workflow" id="toc-project-workflow" class="nav-link" data-scroll-target="#project-workflow">Project Workflow</a></li>
   <li><a href="#our-team" id="toc-our-team" class="nav-link" data-scroll-target="#our-team">Our Team</a></li>
   </ul>
 </nav>
@@ -152,18 +177,62 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="about-the-project" class="level2">
 <h2 class="anchored" data-anchor-id="about-the-project">About the Project</h2>
+<p>This project evaluates career opportunities for <strong>Data Scientists within the Software Publishers industry (NAICS 5132)</strong>. The goal is to create a practical career-evaluation product that helps students and early-career professionals understand the market, identify important skills, and determine where additional skill development may improve career readiness.</p>
+<p>Our analysis uses job-posting data to examine employer demand, compensation, geography, experience, education, remote-work patterns, and technical skills.</p>
 </section>
 <section id="our-project-question" class="level2">
 <h2 class="anchored" data-anchor-id="our-project-question">Our Project Question</h2>
+<p><strong>What does the current job market look like for Data Scientists within the Software Publishers industry, and which skills should students prioritize to improve their career readiness for these opportunities?</strong></p>
 </section>
 <section id="project-scope" class="level2">
 <h2 class="anchored" data-anchor-id="project-scope">Project Scope</h2>
+<ul>
+<li><strong>Career Pathway:</strong> Data Scientist</li>
+<li><strong>Industry:</strong> Software Publishers</li>
+<li><strong>NAICS Code:</strong> 5132</li>
+<li><strong>Primary Analysis Window:</strong> May–September 2024</li>
+<li><strong>Final Enhanced Dataset:</strong> 1,016 cleaned postings</li>
+<li><strong>Unique Employers:</strong> 174</li>
+</ul>
+<p>The enhanced analytical dataset is restricted to Software Publishers and postings classified within the <strong>Data Scientists</strong> occupation. Staffing-agency postings and duplicate records were removed before analysis.</p>
 </section>
-<section id="what-we-will-analyze" class="level2">
-<h2 class="anchored" data-anchor-id="what-we-will-analyze">What We Will Analyze</h2>
+<section id="what-we-analyze" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-analyze">What We Analyze</h2>
+<p>The project examines:</p>
+<ul>
+<li>job-posting activity over time;</li>
+<li>leading employers and hiring locations;</li>
+<li>salary distributions;</li>
+<li>experience requirements;</li>
+<li>education requirements;</li>
+<li>remote and hybrid work patterns;</li>
+<li>skills most frequently requested by employers; and</li>
+<li>gaps between employer skill demand and current team proficiency.</li>
+</ul>
 </section>
-<section id="expected-outcomes" class="level2">
-<h2 class="anchored" data-anchor-id="expected-outcomes">Expected Outcomes’</h2>
+<section id="key-market-findings" class="level2">
+<h2 class="anchored" data-anchor-id="key-market-findings">Key Market Findings</h2>
+<p>Our exploratory analysis identified several notable patterns:</p>
+<ul>
+<li><strong>Oracle</strong> is the largest employer represented in the dataset, with 392 postings.</li>
+<li><strong>California</strong> has the largest number of postings, followed by Illinois and Massachusetts.</li>
+<li>Among postings with usable compensation data, the <strong>median annual salary midpoint is approximately $132,550</strong>.</li>
+<li>Among postings reporting experience requirements, the <strong>median minimum requirement is 5 years</strong>.</li>
+<li>A <strong>bachelor’s degree</strong> is the most common explicitly listed education level.</li>
+<li><strong>SQL, Python, and Tableau</strong> are among the most frequently observed technical skills included in our career-readiness comparison.</li>
+<li>Communication and other professional skills also appear frequently, emphasizing that technical ability alone does not define career readiness.</li>
+</ul>
+</section>
+<section id="project-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="project-workflow">Project Workflow</h2>
+<p>The project progresses through four major analytical stages:</p>
+<ol type="1">
+<li><strong>Project Framing</strong> — define the Data Scientist pathway and Software Publishers industry scope.</li>
+<li><strong>Data Preparation and EDA</strong> — collect, filter, clean, and analyze job-market data.</li>
+<li><strong>Skill Gap Analysis</strong> — compare employer skill demand with team proficiency.</li>
+<li><strong>Career Evaluation and Recommendations</strong> — translate the findings into practical career-development guidance.</li>
+</ol>
+<p>Use the navigation above to explore the project methodology, exploratory analysis, skill-gap analysis, and later analytical components.</p>
 </section>
 <section id="our-team" class="level2">
 <h2 class="anchored" data-anchor-id="our-team">Our Team</h2>

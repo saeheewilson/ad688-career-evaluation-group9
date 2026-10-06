@@ -1,0 +1,165 @@
+---
+title: "Data Preparation"
+format:
+  html:
+    toc: true
+---
+
+# Data Preparation
+
+## Scope and Filtering Strategy
+
+The analytical dataset is restricted to the team's selected industry and career pathway:
+
+- **Industry:** Software Publishers
+- **NAICS:** 5132
+- **Career Pathway:** Data Scientist
+
+The MET Career Compass API was queried using NAICS 5132. The initial API pull returned **4,641 unique job postings**.
+
+To identify postings relevant to the Data Scientist pathway, job titles were normalized and searched for terms associated with Data Scientist and closely related AI/ML roles. These included:
+
+- Data Scientist
+- Machine Learning Scientist
+- Applied Scientist
+- Research Scientist
+- Machine Learning Engineer
+- ML Engineer
+- AI Engineer
+
+This filtering approach was intentionally kept narrow so that the final dataset would remain aligned with the selected Data Scientist career pathway rather than expanding into unrelated analytical or software roles.
+
+## Data Pipeline
+
+The project uses a staged Python pipeline:
+
+1. `01_pull_data.py` retrieves Software Publishers job postings from the MET Career Compass API.
+2. `02_filter_data_scientist.py` identifies Data Scientist and closely related AI/ML roles.
+3. `03_clean_data.py` removes duplicate and staffing-agency records and creates cleaned analytical fields.
+4. `04_skill_summary.py` summarizes selected technical skills.
+5. `05_data_dictionary.py` creates a variable-description file.
+6. `06_market_summary.py` produces baseline summary tables.
+
+The API pull returned **4,641 unique postings**. The career-pathway filter identified **8 relevant postings**, including direct Data Scientist titles and related AI/ML roles. One staffing-agency posting was removed during cleaning, resulting in a final analytical dataset of **7 postings**.
+
+## Core Variables
+
+The API provides fields related to:
+
+- job title and normalized title;
+- company and organization;
+- posting date;
+- city, state, and geographic identifiers;
+- remote status;
+- employment type;
+- salary;
+- SOC and O*NET occupation classifications;
+- NAICS industry classification;
+- skills;
+- job description;
+- education and work-related signals.
+
+The cleaned dataset retains the fields most directly related to the project's market-baseline and skill-gap analyses.
+
+## Cleaning Decisions
+
+### Duplicates
+
+Duplicate postings were removed using the unique `job_id` field.
+
+### Staffing Agencies
+
+Records identified as staffing-agency postings were excluded from the final analytical dataset so that employer-level findings would more closely reflect direct hiring organizations.
+
+### Salary
+
+Salary fields were converted to numeric values, and nonpositive salary values were treated as missing rather than as valid compensation observations. A salary midpoint was calculated as the average of the reported minimum and maximum salary when both values were available.
+
+In the enhanced dataset, usable salary midpoint information is available for **684 of 1,016 postings**. Salary values vary substantially across postings, so both the median and distribution are examined in the Exploratory Data Analysis.
+
+### Location
+
+City and state fields were retained where available. Missing geographic values were classified as unknown rather than inferred. Geographic analysis focuses on reported state-level information to identify major employment markets.
+
+### Remote Status
+
+Remote-work classifications were retained from the enhanced dataset. The final dataset contains **190 Remote**, **31 Hybrid Remote**, and **7 Not Remote** postings. Another **788 postings** have no identified remote classification.
+
+Missing remote classifications are treated as unspecified rather than assumed to represent onsite positions.
+
+### Experience
+
+Minimum and maximum years of experience were converted to numeric fields where available. Minimum experience information is available for **658 postings**.
+
+Missing experience requirements were preserved rather than estimated.
+
+### Education
+
+Education requirements were retained using the standardized education fields in the enhanced dataset. All 1,016 records contain an education classification, although **408 postings explicitly report "No Education Listed."**
+
+This distinction allows postings without a stated education requirement to remain separate from postings that explicitly require a degree.
+
+### Skills
+
+Standardized skill fields were retained for the Skill Gap Analysis. The dataset includes overall skills as well as specialized and software-specific skill classifications.
+
+The skill lists were parsed into individual skills and counted across postings to measure employer demand. This allows frequently requested skills to be compared with the project team's self-assessed proficiency.
+
+### Missing Values
+
+Missing values were preserved and explicitly reported rather than replaced with estimated values. This is especially important for salary, experience, geography, and remote-work information.
+
+### Outliers and Inconsistent Labels
+
+Nonpositive salary values were treated as missing. Valid salary observations were retained even when unusually high or low because the postings span different employers, responsibilities, and seniority levels. The Exploratory Data Analysis therefore emphasizes the median in addition to the mean when interpreting compensation.
+
+Original job titles were also preserved because the standardized Data Scientists occupational classification includes a broad range of titles.
+
+## Enhanced Dataset for Module 3
+
+The initial API pipeline produced a very small career-specific sample: **7 cleaned postings from 6 employers**. While this process established a reproducible filtering and cleaning workflow, the sample was too limited to support meaningful comparisons of salary, geography, experience, education, and remote-work patterns.
+
+For the enhanced Module 3 analysis, the project uses the larger job-posting dataset provided for the assignment. The same industry and career scope is maintained using:
+
+- **NAICS 5132:** Software Publishers
+- **SOC occupation:** Data Scientists
+
+The industry and occupation filters initially identified **1,037 postings**. After removing **21 staffing-agency postings** and checking posting identifiers for duplicates, the final enhanced analytical dataset contains **1,016 postings from 174 employers**.
+
+The postings cover **May 1 through September 30, 2024**.
+
+The enhanced dataset provides substantially better coverage for the variables required for market analysis:
+
+- **684 postings** contain usable salary midpoint information;
+- **658 postings** contain minimum experience requirements;
+- all **1,016 postings** contain an education classification, including records explicitly classified as having no education listed;
+- remote-work classifications distinguish Remote, Hybrid Remote, Not Remote, and unspecified records;
+- city and state fields support geographic analysis; and
+- standardized skill fields support employer-demand and skill-gap analysis.
+
+The enhanced dataset is therefore used as the **primary analytical dataset for the Exploratory Data Analysis and Skill Gap Analysis**, while the original API workflow documents the project's initial data-acquisition and filtering process.
+
+## Data Coverage and Limitations
+
+Although the enhanced dataset provides much stronger coverage than the original API sample, several limitations remain.
+
+First, all 1,016 postings are classified as **Data Scientists** through the SOC field, but their raw job titles vary considerably. The sample includes analytics, artificial intelligence, consulting, implementation, business intelligence, and other related roles. Results therefore describe the broader occupational market represented by the Data Scientists classification rather than only jobs whose titles explicitly contain "Data Scientist."
+
+Second, the dataset covers only **five months in 2024**, so changes in posting volume should not be interpreted as long-term employment trends.
+
+Third, salary and experience information are not available for every posting. Remote-work information is particularly incomplete because most postings do not contain an identified remote classification.
+
+Finally, employer representation is uneven. Some organizations, particularly Oracle, contribute a large number of postings. Aggregate results may therefore reflect the hiring patterns of the largest employers in the sample.
+
+## Exported Outputs
+
+The project generates and uses the following analytical outputs:
+
+- `data/processed/data_scientist_software_publishers.csv` — cleaned output from the initial API pipeline;
+- `data/processed/data_dictionary.csv` — variable descriptions from the initial pipeline;
+- `data/processed/skill_summary.csv` — initial technical-skill summary;
+- `data/module3/data_scientist_software_publishers_clean.csv` — enhanced 1,016-posting analytical dataset;
+- `data/module3/top20_market_skills.csv` — most frequently requested employer skills; and
+- `data/module3/team_skill_market_demand.csv` — employer demand for the technical skills used in the team comparison.
+
+The large raw Module 3 dataset is kept out of version control. Analysis pages use the smaller filtered and processed outputs to reduce rendering time and avoid GitHub Pages issues.

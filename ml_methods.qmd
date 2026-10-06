@@ -1,0 +1,42 @@
+---
+title: "Predictive Modeling"
+format:
+  html:
+    toc: true
+---
+
+# Predictive Modeling
+
+## Role in the Career Evaluation Product
+
+Machine learning methods can extend the descriptive job-market analysis by identifying patterns among postings and helping organize opportunities into meaningful groups.
+
+At the current stage of the project, the primary focus is exploratory analysis and skill-gap assessment. The cleaned dataset and variables developed in Modules 2 and 3 establish the foundation for more advanced modeling in later project phases.
+
+## Potential Modeling Approaches
+
+Future analysis may include:
+
+- clustering job postings based on skills, experience, salary, and other characteristics;
+- grouping employers or roles with similar hiring profiles;
+- identifying segments of opportunities that may be more attainable for early-career candidates;
+- developing a structured career-fit or opportunity score; and
+- comparing job-market segments based on compensation and skill requirements.
+
+## Candidate Features
+
+Potential variables for modeling include:
+
+- salary midpoint;
+- minimum years of experience;
+- education requirements;
+- remote-work classification;
+- employer;
+- geographic location; and
+- technical skill indicators.
+
+These features can help distinguish different types of opportunities within the Data Scientist occupational market in Software Publishers.
+
+## Next Stage
+
+The final modeling approach will be selected based on the project question and the quality of the available variables. Any model or segmentation method will be evaluated and interpreted in the context of career decision-making rather than used as a purely technical exercise.

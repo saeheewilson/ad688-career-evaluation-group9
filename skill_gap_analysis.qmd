@@ -1,0 +1,308 @@
+---
+title: "Skill Gap Analysis"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+# Skill Gap Analysis
+
+## Purpose
+
+The Skill Gap Analysis compares the skills requested by employers in the Software Publishers job market with the current skill levels of the project team.
+
+Employer demand is based on the **1,016 cleaned job postings** used in the Exploratory Data Analysis. Team members separately rate their proficiency in selected technical skills on a **1–5 scale**, where 1 represents no experience and 5 represents high proficiency.
+
+This comparison helps identify:
+
+- the skills most frequently requested by employers;
+- the technical skills most relevant to Data Scientist career preparation;
+- areas where the team already demonstrates strength;
+- gaps between employer demand and current team proficiency; and
+- opportunities for future skill development.
+
+```{python}
+#| label: setup
+#| include: false
+
+import pandas as pd
+import plotly.express as px
+
+PLOT_TEMPLATE = "plotly_white"
+
+top_skills = pd.read_csv(
+    "data/module3/top20_market_skills.csv"
+)
+
+technical_demand = pd.read_csv(
+    "data/module3/team_skill_market_demand.csv"
+)
+
+team_ratings = pd.read_csv(
+    "data/module3/team_skill_ratings.csv"
+)
+```
+
+## Skills Most Frequently Requested by Employers
+
+The job-posting data contain both technical and professional skills. The following chart shows the 20 skills appearing most frequently across the 1,016 postings.
+
+```{python}
+#| label: top-market-skills
+
+plot_data = (
+    top_skills
+    .sort_values("Postings")
+)
+
+fig = px.bar(
+    plot_data,
+    x="Postings",
+    y="Skill",
+    orientation="h",
+    title="Top 20 Skills Requested by Employers",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(
+    showlegend=False,
+    yaxis_title="",
+    xaxis_title="Number of Postings"
+)
+
+fig.show()
+```
+
+**Communication** is the most frequently identified skill, appearing in **494 postings (48.6%)**. Consulting, sales, leadership, and management also appear frequently, demonstrating that the occupational market captured by the dataset includes substantial demand for professional and business-facing capabilities in addition to technical expertise.
+
+Among the top overall skills, **SQL and Data Analysis each appear in 240 postings (23.6%)**. This reinforces the importance of data manipulation and analytical capabilities for candidates pursuing opportunities within the Data Scientist occupational category.
+
+## Technical Skill Demand
+
+For the team comparison, the analysis focuses on a selected group of technical skills relevant to data science and analytics.
+
+```{python}
+#| label: technical-skill-demand
+
+technical_plot = (
+    technical_demand
+    .sort_values("Postings")
+)
+
+fig = px.bar(
+    technical_plot,
+    x="Postings",
+    y="Skill",
+    orientation="h",
+    title="Demand for Selected Technical Skills",
+    template=PLOT_TEMPLATE,
+    hover_data=["Percent"]
+)
+
+fig.update_layout(
+    showlegend=False,
+    yaxis_title="",
+    xaxis_title="Number of Postings"
+)
+
+fig.show()
+```
+
+Within the selected technical skills, **SQL has the highest demand**, appearing in **240 postings (23.6%)**. It is followed by **Python with 134 postings (13.2%)** and **Tableau with 130 postings (12.8%)**.
+
+Other relevant skills include Power BI, Statistics, Machine Learning, Excel, Azure, AWS, GCP, and Spark. Together, these technologies provide a useful framework for evaluating the team's current preparation against the skills represented in the job market.
+
+## Team Self-Assessment
+
+Each team member rates their proficiency in the selected technical skills using the following scale:
+
+| Rating | Skill Level |
+|---|---|
+| 1 | No experience |
+| 2 | Beginner |
+| 3 | Intermediate |
+| 4 | Advanced |
+| 5 | Highly proficient |
+
+The completed team ratings will be compared with employer demand to identify individual and team-level skill gaps.
+
+## Team Skill Comparison
+
+The self-assessment results show how proficiency varies across the three team members.
+
+```{python}
+#| label: team-skill-heatmap
+
+ratings_long = team_ratings.melt(
+    id_vars="Skill",
+    var_name="Team Member",
+    value_name="Rating"
+)
+
+fig = px.density_heatmap(
+    ratings_long,
+    x="Skill",
+    y="Team Member",
+    z="Rating",
+    histfunc="avg",
+    text_auto=True,
+    title="Team Skill Levels",
+    color_continuous_scale="RdYlGn",
+    range_color=[1, 5]
+)
+
+fig.update_layout(
+    xaxis_title="",
+    yaxis_title="",
+    coloraxis_colorbar_title="Rating"
+)
+
+fig.show()
+```
+
+The team's strongest shared skill is **Excel**, with all three members rating themselves 5 out of 5. Python, SQL, Statistics, Tableau, and Power BI show moderate proficiency but vary across individual team members.
+
+The clearest team-wide weaknesses are **Machine Learning, AWS, Azure, and GCP**, where all three members currently report beginner-level proficiency.
+
+## Market Demand Compared with Team Proficiency
+
+A direct comparison between job-posting frequency and a 1–5 proficiency score would use different units. Instead, this analysis combines the two measures into a simple **learning-priority score**.
+
+The score increases when:
+
+1. a skill appears frequently in employer postings; and
+2. the team's average proficiency in that skill is low.
+
+The score is intended only as a prioritization tool rather than a predictive model.
+
+```{python}
+#| label: market-team-gap
+
+team_average = team_ratings.copy()
+
+member_columns = [
+    "Dylan Thomson",
+    "Richard Wu",
+    "Sae Hee Wilson"
+]
+
+team_average["Team Average"] = (
+    team_average[member_columns].mean(axis=1)
+)
+
+gap = technical_demand.merge(
+    team_average[["Skill", "Team Average"]],
+    on="Skill",
+    how="left"
+)
+
+gap["Learning Priority"] = (
+    gap["Percent"]
+    * ((5 - gap["Team Average"]) / 4)
+)
+
+gap = gap.sort_values(
+    "Learning Priority",
+    ascending=False
+)
+
+gap.round({
+    "Percent": 1,
+    "Team Average": 2,
+    "Learning Priority": 2
+})
+```
+
+```{python}
+#| label: learning-priority-chart
+
+priority_plot = (
+    gap.sort_values("Learning Priority")
+)
+
+fig = px.bar(
+    priority_plot,
+    x="Learning Priority",
+    y="Skill",
+    orientation="h",
+    title="Technical Skill Learning Priorities",
+    template=PLOT_TEMPLATE,
+    hover_data=[
+        "Postings",
+        "Percent",
+        "Team Average"
+    ]
+)
+
+fig.update_layout(
+    showlegend=False,
+    yaxis_title="",
+    xaxis_title="Learning Priority Score"
+)
+
+fig.show()
+```
+
+The comparison identifies **SQL and Tableau** as particularly important development areas because they combine relatively high employer demand with room for improvement in team proficiency.
+
+**Machine Learning** also represents an important team-wide gap. Although it appears less frequently than SQL or Tableau, every team member currently rates their proficiency at 1 out of 5, making it a logical area for development for a Data Scientist career pathway.
+
+Python is relatively well represented across the team, particularly for Richard, but remains important because it appears in a meaningful share of employer postings. Cloud-platform skills such as Azure, AWS, and GCP are less frequently listed individually but represent another area where all three team members currently report limited proficiency.
+
+Excel shows the opposite pattern: the team reports very strong proficiency, while it appears less frequently in the selected employer-demand comparison. This suggests that future learning efforts should focus more heavily on the higher-demand skills where proficiency remains lower.
+
+## Individual Development Priorities
+
+### Dylan Thomson
+
+Dylan's strongest reported areas are **Excel, Statistics, Tableau, and Power BI**. His most important development priority is **SQL**, which is the most frequently requested technical skill in the selected comparison but is currently rated 2 out of 5.
+
+Additional priorities include:
+
+- strengthening Python from intermediate toward advanced proficiency;
+- developing practical Machine Learning experience;
+- gaining introductory experience with AWS, Azure, or GCP; and
+- building familiarity with Spark for larger-scale data workflows.
+
+### Richard Wu
+
+Richard reports strong proficiency in **Excel, Python, and SQL**. These strengths align well with several of the more frequently requested technical skills in the job market.
+
+His primary development areas include:
+
+- Machine Learning;
+- Statistics;
+- Tableau and Power BI; and
+- cloud platforms including AWS, Azure, and GCP.
+
+Because Richard already reports strong Python and SQL capabilities, developing Machine Learning and cloud experience would help build on an existing technical foundation.
+
+### Sae Hee Wilson
+
+Sae Hee reports strong proficiency in **Excel** and intermediate proficiency in **Python, SQL, Statistics, and Power BI**.
+
+Her key development priorities include:
+
+- Tableau, which has relatively high employer demand but is currently rated 1 out of 5;
+- Machine Learning;
+- AWS, Azure, and GCP; and
+- continued development of Python and SQL toward more advanced proficiency.
+
+## Team Improvement Plan
+
+The skill-gap results suggest that the team should prioritize learning in roughly the following order:
+
+1. **SQL** — strengthen advanced querying, joins, window functions, data transformation, and analytical workflows.
+2. **Tableau and visualization** — improve the team's ability to communicate analytical results through dashboards and interactive visualizations.
+3. **Machine Learning** — build practical experience with supervised and unsupervised learning, model evaluation, and common Python libraries.
+4. **Python** — continue developing data manipulation, automation, visualization, and modeling capabilities.
+5. **Cloud platforms** — gain foundational exposure to AWS, Azure, or GCP services used in data and analytics workflows.
+
+The team can collaborate by using existing strengths to support weaker areas. For example, Richard can support Python and SQL development, Dylan can contribute Statistics, Tableau, and Power BI knowledge, and all three members can work together on Machine Learning and cloud-platform exercises.
+
+## Skill Gap Conclusions
+
+The comparison shows that career readiness requires a combination of technical and professional skills. The team's strongest shared capability is Excel, while SQL, Python, Statistics, Tableau, and Power BI provide a moderate technical foundation.
+
+The most important gaps are concentrated in **Machine Learning and cloud technologies**, with additional individual gaps in SQL and Tableau. Addressing these areas would move the team's skill profile closer to the capabilities represented in Software Publishers job postings and better support preparation for Data Scientist-related careers.
