@@ -103,11 +103,16 @@ segment_summary = (
         Pct_Remote=("is_remote", "mean"),
     )
     .sort_values("Postings", ascending=False)
-    .reset_index()
 )
-segment_summary["Pct_Remote"] = (segment_summary["Pct_Remote"] * 100).round(1)
-segment_summary["Median_Salary"] = segment_summary["Median_Salary"].round(0)
-segment_summary.columns = ["Role Segment", "Postings", "Median Salary ($)", "Median Min. Experience (yrs)", "% Remote"]
+
+segment_summary["Median_Salary"] = segment_summary["Median_Salary"].map("${:,.0f}".format)
+segment_summary["Median_Experience"] = segment_summary["Median_Experience"].map(
+    lambda v: "Not stated" if pd.isna(v) else f"{v:.0f}"
+)
+segment_summary["Pct_Remote"] = (segment_summary["Pct_Remote"] * 100).map("{:.0f}%".format)
+
+segment_summary.index.name = "Role Segment"
+segment_summary.columns = ["Postings", "Median Salary", "Median Exp. (yrs)", "Remote"]
 segment_summary
 ```
 
@@ -211,11 +216,15 @@ def metrics(name, pred):
     return {"Model": name, "RMSE ($)": round(mean_squared_error(y_test, pred) ** 0.5),
             "MAE ($)": round(mean_absolute_error(y_test, pred)), "R²": round(r2_score(y_test, pred), 2)}
 
-pd.DataFrame([
+model_results = pd.DataFrame([
     metrics("Baseline (median salary)", np.full(len(y_test), y_train.median())),
     metrics("Linear regression", linear.predict(X_test)),
     metrics("Random forest", forest.predict(X_test)),
-])
+]).set_index("Model")
+
+model_results["RMSE ($)"] = model_results["RMSE ($)"].map("{:,.0f}".format)
+model_results["MAE ($)"] = model_results["MAE ($)"].map("{:,.0f}".format)
+model_results
 ```
 
 The random forest performed best, explaining about 57% of the variation in salary with an average error of about $25,000, and 5-fold cross-validation gave a similar average R² of about 0.52. In the linear model, each additional year of required experience was associated with about $3,600 more in salary, and Architect/Engineer roles paid about $43,800 more than analyst roles after accounting for other factors. The model estimates about $120,000 for an analyst role asking for 2 years of experience and about $205,000 for an Architect/Engineer role asking for 8 years and cloud skills.
