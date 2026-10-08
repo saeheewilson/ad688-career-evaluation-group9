@@ -1,0 +1,170 @@
+---
+title: "Career Evaluation"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+# Career Evaluation Scorecard
+
+## Purpose
+
+The exploratory analysis showed that the Data Scientist–classified postings in Software Publishers cover several different kinds of jobs. This page compares those role segments and ranks them with a simple scorecard, to answer one question: which segment is the best bet for a student or early-career job seeker?
+
+```{python}
+#| label: setup
+#| include: false
+
+import pandas as pd
+import plotly.express as px
+
+PLOT_TEMPLATE = "plotly_white"
+
+panel = pd.read_csv("data/module3/career_market_panel.csv")
+team_ratings = pd.read_csv("data/module3/team_skill_ratings.csv")
+```
+
+## Scorecard Factors
+
+| Factor | Measured as | Weight |
+|---|---|---|
+| Pay | Median salary midpoint | 30% |
+| Accessibility | Share of postings asking for 3 years of experience or less | 25% |
+| Demand | Number of postings | 20% |
+| Skill fit | Team skill ratings, weighted by how often the segment asks for each skill | 15% |
+| Remote | Share of postings that are fully remote | 10% |
+
+Accessibility gets a high weight because the product is aimed at students and early-career job seekers. Remote gets the lowest because most postings don't say whether they're remote.
+
+Two segments are left out of the scoring. Data Scientist / ML has only 5 postings, which is too few to compare. AI Data Trainer postings don't list experience requirements or any of the tracked technical skills, so two of the five factors can't be measured for them.
+
+## Benchmark Table
+
+```{python}
+#| label: benchmark-table
+
+SKILL_COLUMNS = {
+    "Python": "skill_python",
+    "SQL": "skill_sql",
+    "Machine Learning": "skill_machine_learning",
+    "Statistics": "skill_statistics",
+    "AWS": "skill_aws",
+    "Azure": "skill_azure",
+    "GCP": "skill_gcp",
+    "Tableau": "skill_tableau",
+    "Power BI": "skill_power_bi",
+    "Excel": "skill_excel",
+    "Spark": "skill_spark",
+}
+
+member_columns = ["Dylan Thomson", "Richard Wu", "Sae Hee Wilson"]
+team_average = team_ratings.set_index("Skill")[member_columns].mean(axis=1)
+
+EXCLUDED_SEGMENTS = ["Data Scientist / ML", "AI Data Trainer"]
+scored = panel[~panel["role_segment"].isin(EXCLUDED_SEGMENTS)]
+
+rows = []
+
+for segment, group in scored.groupby("role_segment"):
+    # Share of postings in this segment that ask for each skill
+    skill_demand = pd.Series(
+        {skill: group[column].mean() for skill, column in SKILL_COLUMNS.items()}
+    )
+
+    # Team proficiency (out of 5), weighted by how often each skill is requested
+    skill_fit = (skill_demand * team_average / 5).sum() / skill_demand.sum()
+
+    stated_experience = group["MIN_YEARS_EXPERIENCE"].dropna()
+
+    rows.append({
+        "Role Segment": segment,
+        "Postings": len(group),
+        "Median Salary ($)": group["SALARY_MIDPOINT"].median(),
+        "% Entry-Level (≤3 yrs)": (stated_experience <= 3).mean() * 100,
+        "% Remote": group["is_remote"].mean() * 100,
+        "Team Skill Fit (%)": skill_fit * 100,
+    })
+
+benchmark = pd.DataFrame(rows).sort_values("Postings", ascending=False)
+
+benchmark.round(1)
+```
+
+Data / BI Analyst roles are the easiest to get into. About 47% of the postings that list an experience requirement ask for 3 years or less, compared with about 10% for Consultant / Implementation and 7% for Architect / Engineer.
+
+Architect / Engineer roles pay the most, with a median around $187,550, but they're the hardest to get into and the worst match for our skills (about 34% fit). Most of that gap is cloud platforms, where all three of us rated ourselves as beginners.
+
+Sales / Pre-Sales roles are the most likely to be remote (about 56%) but have the lowest pay of the scored segments.
+
+## Opportunity Score
+
+Each factor is rescaled from 0 (worst segment) to 1 (best segment) so factors in different units can be combined, then weighted as shown above.
+
+```{python}
+#| label: opportunity-score
+
+WEIGHTS = {
+    "Median Salary ($)": 0.30,
+    "% Entry-Level (≤3 yrs)": 0.25,
+    "Postings": 0.20,
+    "Team Skill Fit (%)": 0.15,
+    "% Remote": 0.10,
+}
+
+scores = benchmark[["Role Segment"]].copy()
+
+for column in WEIGHTS:
+    values = benchmark[column]
+    scores[column] = (values - values.min()) / (values.max() - values.min())
+
+scores["Opportunity Score"] = sum(
+    scores[column] * weight for column, weight in WEIGHTS.items()
+) * 100
+
+scores = scores.sort_values("Opportunity Score", ascending=False)
+
+fig = px.bar(
+    scores.sort_values("Opportunity Score"),
+    x="Opportunity Score",
+    y="Role Segment",
+    orientation="h",
+    title="Opportunity Score by Role Segment (0–100)",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False, yaxis_title="")
+fig.show()
+```
+
+Data / BI Analyst comes out on top with a score of about 61, mainly because it's the most accessible segment and a good match for our skills. Other Business / Analyst is second at about 54. Consultant / Implementation is third at about 43; it has the most openings, but very few of them are entry-level.
+
+## Checking the Weights
+
+The weights are a judgment call, so we reran the ranking with all five factors weighted equally to see whether the order changes.
+
+```{python}
+#| label: sensitivity-check
+
+scores["Equal-Weight Score"] = scores[list(WEIGHTS)].mean(axis=1) * 100
+
+comparison = scores[["Role Segment", "Opportunity Score", "Equal-Weight Score"]].copy()
+comparison["Rank (Our Weights)"] = comparison["Opportunity Score"].rank(ascending=False).astype(int)
+comparison["Rank (Equal Weights)"] = comparison["Equal-Weight Score"].rank(ascending=False).astype(int)
+
+comparison.round(1)
+```
+
+The top three stay in the same order. Only the bottom two, Architect / Engineer and Sales / Pre-Sales, swap places. Data / BI Analyst ranks first either way.
+
+## What This Means for a Job Seeker
+
+For a student aiming at data science in software publishing, a Data / BI Analyst role is the most realistic first job. It's the most open to early-career candidates, has the second-most openings, and pays a median of about $130,000.
+
+Architect / Engineer roles are a longer-term goal. They pay the most but usually want around 8 years of experience plus cloud skills.
+
+Consultant / Implementation roles are plentiful but mostly mid-career, and most are at Oracle. They suit people who already have ERP or industry experience.
+
+## Limitations
+
+Segments are assigned from keywords in job titles, so some postings will be in the wrong group. Accessibility only counts postings that list an experience requirement. Remote status is missing for most postings, which is why it has the lowest weight. Skill fit is based on our own self-ratings, so another student's scores would come out differently.
