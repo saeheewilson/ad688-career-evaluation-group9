@@ -102,3 +102,4 @@ plotly
 scikit-learn
 kaleido==0.2.1
 statsmodels
+matplotlib

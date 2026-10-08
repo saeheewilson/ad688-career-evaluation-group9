@@ -1,0 +1,239 @@
+---
+title: "Career Evaluation: Data Scientist–Classified Roles in Software Publishers (NAICS 5132)"
+subtitle: "AD688 Group 9 Final Report"
+author:
+  - Dylan Thomson
+  - Sae Hee Wilson
+  - Richard Wu
+date: today
+bibliography: references.bib
+format:
+  docx:
+    toc: true
+    number-sections: true
+    fig-width: 6.5
+    fig-height: 3.8
+execute:
+  echo: false
+  warning: false
+---
+
+```{python}
+#| label: setup
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+plt.rcParams.update({"figure.dpi": 150, "axes.spines.top": False, "axes.spines.right": False})
+BAR_COLOR = "#4C72B0"
+
+panel = pd.read_csv("data/module3/career_market_panel.csv")
+team_ratings = pd.read_csv("data/module3/team_skill_ratings.csv")
+
+SKILL_COLUMNS = {
+    "Python": "skill_python",
+    "SQL": "skill_sql",
+    "Machine Learning": "skill_machine_learning",
+    "Statistics": "skill_statistics",
+    "AWS": "skill_aws",
+    "Azure": "skill_azure",
+    "GCP": "skill_gcp",
+    "Tableau": "skill_tableau",
+    "Power BI": "skill_power_bi",
+    "Excel": "skill_excel",
+    "Spark": "skill_spark",
+}
+
+member_columns = ["Dylan Thomson", "Richard Wu", "Sae Hee Wilson"]
+team_average = team_ratings.set_index("Skill")[member_columns].mean(axis=1)
+
+
+def hbar(data, value_col, label_col, title, xlabel):
+    data = data.sort_values(value_col)
+    fig, ax = plt.subplots()
+    ax.barh(data[label_col], data[value_col], color=BAR_COLOR)
+    ax.set_title(title, loc="left", fontsize=11)
+    ax.set_xlabel(xlabel)
+    plt.tight_layout()
+    plt.show()
+```
+
+# Product Framing
+
+This project is a career evaluation product for students and early-career professionals interested in data science careers in the software industry. It focuses on one career pathway, **Data Scientist**, within one industry, **Software Publishers (NAICS 5132)** [@census2022naics]. Data science is projected to grow much faster than average as organizations rely more on data and AI [@bls2026datascientists], and the role combines programming, statistics, machine learning, and communication skills [@onet2026datascientists], which makes it useful for students to see which of these skills employers actually ask for.
+
+The product is built to answer the following question: what does the job market look like for Data Scientist–classified roles in Software Publishers, and which skills should students focus on to prepare for them?
+
+# Scope and Data
+
+The project started with a pull from the MET Career Compass API filtered to NAICS 5132. That pull returned 4,641 postings, but only 7 remained after filtering to Data Scientist and related AI/ML titles and removing staffing agencies, which was too few to analyze. For the rest of the project we used the larger course dataset, filtered to Software Publishers and the Data Scientists occupation (SOC). After removing 21 staffing-agency postings and checking for duplicates, the analytical sample contains **1,016 postings from 174 employers**, posted between May and September 2024.
+
+When we looked at the job titles, we found that the occupation label is much broader than the job title suggests. Only 5 postings have data science or machine learning titles, while most are consulting, analyst, and architecture roles, many of them at Oracle. To make the results useful for a job seeker, we grouped postings into role segments based on keywords in their job titles.
+
+```{python}
+#| label: fig-segments
+#| fig-cap: "Postings by role segment"
+
+segment_counts = panel["role_segment"].value_counts().rename_axis("Segment").reset_index(name="Postings")
+hbar(segment_counts, "Postings", "Segment", "Postings by Role Segment", "Number of postings")
+```
+
+# Market Baseline
+
+Across all 1,016 postings, the median salary midpoint is about $132,550 among the 684 postings that report salary, and the median minimum experience requirement is 5 years among the 658 postings that state one. California has the most postings, followed by Illinois and Massachusetts. A bachelor's degree is the most commonly listed education level, and 408 postings list no education requirement. Remote status is missing for 788 postings, so remote patterns can only be described for the remaining 228, of which 190 are fully remote.
+
+These overall figures hide large differences between role segments, which are summarized below.
+
+```{python}
+#| label: tbl-segment-summary
+#| tbl-cap: "Market baseline by role segment"
+
+segment_summary = (
+    panel.groupby("role_segment")
+    .agg(
+        Postings=("ID", "size"),
+        Median_Salary=("SALARY_MIDPOINT", "median"),
+        Median_Experience=("MIN_YEARS_EXPERIENCE", "median"),
+        Pct_Remote=("is_remote", "mean"),
+    )
+    .sort_values("Postings", ascending=False)
+    .reset_index()
+)
+segment_summary["Pct_Remote"] = (segment_summary["Pct_Remote"] * 100).round(1)
+segment_summary["Median_Salary"] = segment_summary["Median_Salary"].round(0)
+segment_summary.columns = ["Role Segment", "Postings", "Median Salary ($)", "Median Min. Experience (yrs)", "% Remote"]
+segment_summary
+```
+
+Architect / Engineer roles pay the most, with a median around $187,550, but typically ask for 8 years of experience. Data/BI Analyst roles have a median salary of about $130,000 and the lowest typical experience requirement at 4 years. Consultant/Implementation roles are the largest group and pay a similar median to analyst roles, but they usually ask for 6 years of experience.
+
+# Skill-Gap Analysis
+
+Each team member rated their proficiency in 11 technical skills on a 1–5 scale, and we compared those ratings with how often each skill appears in the postings.
+
+```{python}
+#| label: fig-team-heatmap
+#| fig-cap: "Team skill self-ratings (1 = no experience, 5 = highly proficient)"
+
+ratings = team_ratings.set_index("Skill")[member_columns]
+fig, ax = plt.subplots(figsize=(6.5, 2.6))
+image = ax.imshow(ratings.T.values, cmap="RdYlGn", vmin=1, vmax=5, aspect="auto")
+ax.set_xticks(range(len(ratings.index)), ratings.index, rotation=45, ha="right")
+ax.set_yticks(range(len(member_columns)), member_columns)
+for i in range(len(member_columns)):
+    for j in range(len(ratings.index)):
+        ax.text(j, i, ratings.T.values[i, j], ha="center", va="center", fontsize=9)
+ax.set_title("Team Skill Levels", loc="left", fontsize=11)
+plt.tight_layout()
+plt.show()
+```
+
+Excel is the team's strongest shared skill, and Python, SQL, Statistics, Tableau, and Power BI are at a moderate level with variation between members. All three members rated themselves at 1 for Machine Learning and the three cloud platforms. Because the career evaluation pointed to analyst roles as the best starting point (Section 5), we calculated learning priorities using demand within Data/BI Analyst postings. The priority score is higher when a skill is requested often and the team's average rating is low.
+
+```{python}
+#| label: fig-learning-priority
+#| fig-cap: "Learning priorities for Data / BI Analyst roles"
+
+analyst = panel[panel["role_segment"] == "Data / BI Analyst"]
+priorities = pd.DataFrame({"Skill": list(SKILL_COLUMNS)})
+priorities["Team Average"] = priorities["Skill"].map(team_average)
+priorities["% of Analyst Postings"] = priorities["Skill"].map(lambda s: analyst[SKILL_COLUMNS[s]].mean() * 100)
+priorities["Learning Priority"] = priorities["% of Analyst Postings"] * (5 - priorities["Team Average"]) / 4
+hbar(priorities, "Learning Priority", "Skill", "Learning Priorities for Data / BI Analyst Roles", "Priority score")
+```
+
+SQL appears in about 71% of analyst postings and Tableau in about 46%, and because the team's ratings for both are moderate or lower, they are the highest priorities. Python and Power BI follow, while Machine Learning and cloud platforms appear in fewer than 15% of analyst postings and are better treated as longer-term goals.
+
+# Final Analytics
+
+## Career Evaluation Scorecard
+
+We compared five role segments on pay (median salary), accessibility (share of postings asking for 3 years of experience or less), demand (number of postings), team skill fit, and remote share. Data Scientist/ML (5 postings) and AI Data Trainer (no experience or tracked skill data) were excluded. Each factor was rescaled from 0 to 1 and weighted at 30% for pay, 25% for accessibility, 20% for demand, 15% for skill fit, and 10% for remote, with accessibility weighted highly because the product is aimed at early-career job seekers and remote weighted lowest because it is missing for most postings.
+
+```{python}
+#| label: fig-scorecard
+#| fig-cap: "Opportunity score by role segment"
+
+scored = panel[~panel["role_segment"].isin(["Data Scientist / ML", "AI Data Trainer"])]
+rows = []
+for segment, group in scored.groupby("role_segment"):
+    demand = pd.Series({skill: group[col].mean() for skill, col in SKILL_COLUMNS.items()})
+    stated = group["MIN_YEARS_EXPERIENCE"].dropna()
+    rows.append({
+        "Role Segment": segment,
+        "Postings": len(group),
+        "Median Salary ($)": group["SALARY_MIDPOINT"].median(),
+        "% Entry-Level (≤3 yrs)": (stated <= 3).mean() * 100,
+        "% Remote": group["is_remote"].mean() * 100,
+        "Team Skill Fit (%)": (demand * team_average / 5).sum() / demand.sum() * 100,
+    })
+benchmark = pd.DataFrame(rows)
+
+WEIGHTS = {"Median Salary ($)": 0.30, "% Entry-Level (≤3 yrs)": 0.25, "Postings": 0.20,
+           "Team Skill Fit (%)": 0.15, "% Remote": 0.10}
+scaled = benchmark[list(WEIGHTS)].apply(lambda c: (c - c.min()) / (c.max() - c.min()))
+benchmark["Opportunity Score"] = sum(scaled[c] * w for c, w in WEIGHTS.items()) * 100
+benchmark["Equal-Weight Score"] = scaled.mean(axis=1) * 100
+
+hbar(benchmark, "Opportunity Score", "Role Segment", "Opportunity Score (0–100)", "Score")
+```
+
+Data/BI Analyst ranks first with a score of about 61, followed by Other Business/Analyst at about 54 and Consultant/Implementation at about 43. When all five factors were weighted equally, the top three kept the same order and only the bottom two swapped places, so the main result does not depend on the specific weights we chose.
+
+## Salary Model
+
+We predicted salary using role segment, minimum experience, remote, full-time and Oracle flags, education, the 11 tracked skills, and the total number of skills listed, using the 681 postings with usable salary data. We compared a baseline that predicts the median salary, a linear regression, and a random forest, using an 80/20 train/test split. A polynomial version with experience squared was also tested on the Predictive Modeling page and did not improve the linear model.
+
+```{python}
+#| label: tbl-models
+#| tbl-cap: "Salary model performance on the test set"
+
+model_df = panel[panel["SALARY_MIDPOINT"].between(30000, 400000)].copy()
+model_df["exp_missing"] = model_df["MIN_YEARS_EXPERIENCE"].isna().astype(int)
+model_df["min_experience"] = model_df["MIN_YEARS_EXPERIENCE"].fillna(model_df["MIN_YEARS_EXPERIENCE"].median())
+segments = pd.get_dummies(model_df["role_segment"], prefix="segment", dtype=int).drop(columns="segment_Data / BI Analyst")
+features = ["min_experience", "exp_missing", "is_remote", "is_full_time", "is_oracle",
+            "edu_masters", "edu_phd", "edu_not_listed", "skill_count"] + list(SKILL_COLUMNS.values())
+X = pd.concat([model_df[features], segments], axis=1)
+y = model_df["SALARY_MIDPOINT"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+linear = LinearRegression().fit(X_train, y_train)
+forest = RandomForestRegressor(n_estimators=300, min_samples_leaf=5, random_state=42).fit(X_train, y_train)
+
+def metrics(name, pred):
+    return {"Model": name, "RMSE ($)": round(mean_squared_error(y_test, pred) ** 0.5),
+            "MAE ($)": round(mean_absolute_error(y_test, pred)), "R²": round(r2_score(y_test, pred), 2)}
+
+pd.DataFrame([
+    metrics("Baseline (median salary)", np.full(len(y_test), y_train.median())),
+    metrics("Linear regression", linear.predict(X_test)),
+    metrics("Random forest", forest.predict(X_test)),
+])
+```
+
+The random forest performed best, explaining about 57% of the variation in salary with an average error of about $25,000, and 5-fold cross-validation gave a similar average R² of about 0.52. In the linear model, each additional year of required experience was associated with about $3,600 more in salary, and Architect/Engineer roles paid about $43,800 more than analyst roles after accounting for other factors. The model estimates about $120,000 for an analyst role asking for 2 years of experience and about $205,000 for an Architect/Engineer role asking for 8 years and cloud skills.
+
+# Recommendations
+
+For a student aiming at data science in software publishing, a Data/BI Analyst role is the most realistic first job, since it is the most open to early-career candidates, has the second-most openings, and pays a median of about $130,000. Analyst hiring is spread across many employers, led by Oracle, Microsoft, and Salesforce, and California has by far the most analyst postings, while about a quarter of analyst roles are fully remote.
+
+The first skills to build are SQL and Tableau, followed by Python and Power BI. Machine Learning and cloud platforms matter more for the higher-paying Architect/Engineer roles, which typically require around 8 years of experience, so they fit better as longer-term goals. Analyst postings also frequently mention data analysis, communication, and dashboards, so a portfolio project that takes a dataset from cleaning through a dashboard and a written summary is a good way to show these skills together. Candidates with ERP or business-function experience may also want to consider Consultant/Implementation roles, which are the largest segment but usually ask for more experience.
+
+For our team, the largest individual gaps for analyst roles are SQL for Dylan, Tableau and Power BI for Richard, and Tableau followed by SQL for Sae Hee.
+
+# Limitations
+
+The analysis covers five months of 2024 postings in a single industry code, so it describes that market rather than data careers in general. Role segments are assigned from job-title keywords and will misclassify some postings, salary is missing for about a third of postings, and remote status is missing for most of them. The salary model explains about half of the variation in pay, and its coefficients describe associations rather than causes. Skill gaps are based on our own self-ratings, so another student using this product should substitute their own ratings. Finally, the product does not yet track changes over time or compare Software Publishers with other industries.
+
+# Team Contributions
+
+Sae Hee Wilson set up the team repository, and all three team members chose the industry, NAICS code, and target career pathway together. Dylan Thomson completed the rest of Module 1 and all of Module 3, including the project framing, literature review, enhanced dataset, exploratory analysis, skill-gap analysis, and modeling plan. Richard Wu completed Module 2, including the API data pipeline, cleaning, and data preparation. Sae Hee Wilson completed the Module 4 checkpoint and Module 5, including the role segmentation, career market panel and data dictionary, job volume by segment, scorecard, salary models, recommendations, and this report.
+
+# References

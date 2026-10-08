@@ -10,7 +10,7 @@ Our analysis uses job-posting data to examine employer demand, compensation, geo
 
 ## Our Project Question
 
-**What does the current job market look like for Data Scientists within the Software Publishers industry, and which skills should students prioritize to improve their career readiness for these opportunities?**
+**What does the job market look like for Data Scientist–classified roles in Software Publishers, and which skills should students focus on to prepare for them?**
 
 ## Project Scope
 
