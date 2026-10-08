@@ -101,3 +101,4 @@ widgetsnbextension==4.0.16
 plotly
 scikit-learn
 kaleido==0.2.1
+statsmodels
