@@ -1,8 +1,131 @@
 ---
 title: "Career Strategy"
+format:
+  html:
+    toc: true
+    code-fold: true
 ---
 
-# Career Strategy
+# Career Strategy and Recommendations
 
-This section will be developed in a later phase of the project.
+## Summary of Findings
 
+Although every posting in our dataset is classified under the Data Scientists occupation, only 5 of the 1,016 postings have data science or machine learning titles, and most of the market is made up of consulting, analyst, and architecture roles. The career evaluation scorecard ranked Data / BI Analyst roles as the strongest option for a student or early-career job seeker, mainly because they are the most open to candidates with three years of experience or less and are a good match for the skills our team already has. The salary model supported this ranking, estimating about $120,000 for an analyst role asking for two years of experience and showing that experience and the move into architecture or engineering work are what drive higher pay over time.
+
+The recommendations below translate those results:
+
+```{python}
+#| label: setup
+#| include: false
+
+import pandas as pd
+import plotly.express as px
+
+PLOT_TEMPLATE = "plotly_white"
+
+panel = pd.read_csv("data/module3/career_market_panel.csv")
+team_ratings = pd.read_csv("data/module3/team_skill_ratings.csv")
+
+analyst = panel[panel["role_segment"] == "Data / BI Analyst"]
+```
+
+## Where to Apply
+
+```{python}
+#| label: analyst-employers-states
+
+top_employers = (
+    analyst["COMPANY_NAME"]
+    .value_counts()
+    .head(8)
+    .rename_axis("Employer")
+    .reset_index(name="Analyst Postings")
+)
+
+top_states = (
+    analyst["STATE_NAME"]
+    .replace("Unknown", pd.NA)
+    .dropna()
+    .value_counts()
+    .head(6)
+    .rename_axis("State")
+    .reset_index(name="Analyst Postings")
+)
+
+display(top_employers)
+display(top_states)
+```
+
+Analyst hiring is spread across more employers than the market overall, where Oracle accounts for about 39% of postings. Among analyst roles, Oracle, Microsoft, and Salesforce post the most, followed by Autodesk, so a student does not need to depend on a single company. California has by far the most analyst postings (70 of 245), with New York, Washington, Texas, Illinois, and Massachusetts well behind, and about a quarter of analyst postings are classified as fully remote, which opens up employers outside these states as well.
+
+## What to Learn First
+
+The Skill Gap Analysis ranked learning priorities using demand across all 1,016 postings. Because the scorecard points to analyst roles as the best starting point, we recalculated the same learning-priority score using only Data / BI Analyst postings.
+
+```{python}
+#| label: analyst-skill-priorities
+
+SKILL_COLUMNS = {
+    "Python": "skill_python",
+    "SQL": "skill_sql",
+    "Machine Learning": "skill_machine_learning",
+    "Statistics": "skill_statistics",
+    "AWS": "skill_aws",
+    "Azure": "skill_azure",
+    "GCP": "skill_gcp",
+    "Tableau": "skill_tableau",
+    "Power BI": "skill_power_bi",
+    "Excel": "skill_excel",
+    "Spark": "skill_spark",
+}
+
+member_columns = ["Dylan Thomson", "Richard Wu", "Sae Hee Wilson"]
+
+priorities = team_ratings[["Skill"] + member_columns].copy()
+priorities["Team Average"] = priorities[member_columns].mean(axis=1)
+priorities["% of Analyst Postings"] = priorities["Skill"].map(
+    lambda skill: analyst[SKILL_COLUMNS[skill]].mean() * 100
+)
+
+# Same scoring approach as the Skill Gap Analysis page
+priorities["Learning Priority"] = (
+    priorities["% of Analyst Postings"] * (5 - priorities["Team Average"]) / 4
+)
+
+priorities = priorities.sort_values("Learning Priority", ascending=False)
+
+fig = px.bar(
+    priorities.sort_values("Learning Priority"),
+    x="Learning Priority",
+    y="Skill",
+    orientation="h",
+    title="Learning Priorities for Data / BI Analyst Roles",
+    hover_data=["% of Analyst Postings", "Team Average"],
+    template=PLOT_TEMPLATE,
+)
+
+fig.update_layout(showlegend=False, yaxis_title="")
+fig.show()
+
+priorities.round(1)
+```
+
+Focusing on analyst roles makes the priorities sharper than they were for the market as a whole. SQL appears in about 71% of analyst postings and Tableau in about 46%, compared with about 24% and 13% across all postings, and because our team's average ratings for both are moderate or lower, they come out as clear first priorities. Python and Power BI form a second tier, appearing in roughly a third of analyst postings. Machine Learning and the cloud platforms appear in fewer than 15% of analyst postings, so for someone targeting a first analyst role they are better treated as longer-term skills for moving toward architecture, engineering, or data science work later.
+
+## How to Position Yourself
+
+Beyond technical skills, analyst postings frequently list data analysis, communication, dashboards, and business intelligence, which suggests employers want candidates who can turn data into something a business audience can use. A portfolio that shows a complete piece of work, such as cleaning a dataset, building a dashboard in Tableau or Power BI, and writing up the findings, is likely to be more convincing than a list of tools.
+
+Candidates who already have experience with ERP systems or a business function such as finance, HR, or supply chain may also want to look at Consultant/Implementation roles. These roles are the largest segment in the data and pay a similar median salary to analyst roles, but they usually ask for about six years of experience, and most are at Oracle, so they tend to suit people moving over from an industry role rather than students entering the field.
+
+## Next Steps for Our Team
+
+Using the analyst-focused priorities above together with each member's self-ratings:
+
+- **Dylan Thomson** already rates himself highly in Tableau, Power BI, and Statistics, so his biggest gain would come from SQL, which he currently rates at 2 and which appears in most analyst postings.
+- **Richard Wu** is strongest in SQL and Python, so building Tableau or Power BI skills would round out his profile for analyst roles, with Statistics as a secondary focus.
+- **Sae Hee Wilson** rates herself as intermediate in SQL, Python, Statistics, and Power BI, and her largest gap for analyst roles is Tableau, which she currently rates at 1, followed by moving SQL from intermediate toward advanced.
+
+## Limitations
+
+These recommendations come from one five-month window of postings in 2024 within a single industry code, so they describe that market rather than data careers in general. Role segments are based on job-title keywords, salary data is missing for about a third of postings, remote status is missing for most of them, and the skill gaps are based on our own self-ratings, so another student following this approach should substitute their own ratings to get priorities that fit them.

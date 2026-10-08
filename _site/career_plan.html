@@ -26,10 +26,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -73,6 +108,24 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+<script>
+
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+
+</script>
+
+<script type="module">import "https://cdn.plot.ly/plotly-4.1.1.min"</script>
+
+
+
 
 
 <link rel="stylesheet" href="styles.css">
@@ -116,6 +169,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Skill Gap Analysis</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./career_evaluation.html"> 
+<span class="menu-text">Career Evaluation</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./ml_methods.html"> 
 <span class="menu-text">Predictive Modeling</span></a>
   </li>  
@@ -143,7 +200,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#career-strategy" id="toc-career-strategy" class="nav-link active" data-scroll-target="#career-strategy">Career Strategy</a></li>
+  <li><a href="#career-strategy-and-recommendations" id="toc-career-strategy-and-recommendations" class="nav-link active" data-scroll-target="#career-strategy-and-recommendations">Career Strategy and Recommendations</a>
+  <ul class="collapse">
+  <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings">Summary of Findings</a></li>
+  <li><a href="#where-to-apply" id="toc-where-to-apply" class="nav-link" data-scroll-target="#where-to-apply">Where to Apply</a></li>
+  <li><a href="#what-to-learn-first" id="toc-what-to-learn-first" class="nav-link" data-scroll-target="#what-to-learn-first">What to Learn First</a></li>
+  <li><a href="#how-to-position-yourself" id="toc-how-to-position-yourself" class="nav-link" data-scroll-target="#how-to-position-yourself">How to Position Yourself</a></li>
+  <li><a href="#next-steps-for-our-team" id="toc-next-steps-for-our-team" class="nav-link" data-scroll-target="#next-steps-for-our-team">Next Steps for Our Team</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -169,11 +234,382 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="career-strategy" class="level1">
-<h1>Career Strategy</h1>
-<p>This section will be developed in a later phase of the project.</p>
+<section id="career-strategy-and-recommendations" class="level1">
+<h1>Career Strategy and Recommendations</h1>
+<section id="summary-of-findings" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-findings">Summary of Findings</h2>
+<p>Although every posting in our dataset is classified under the Data Scientists occupation, only 5 of the 1,016 postings have data science or machine learning titles, and most of the market is made up of consulting, analyst, and architecture roles. The career evaluation scorecard ranked Data / BI Analyst roles as the strongest option for a student or early-career job seeker, mainly because they are the most open to candidates with three years of experience or less and are a good match for the skills our team already has. The salary model supported this ranking, estimating about $120,000 for an analyst role asking for two years of experience and showing that experience and the move into architecture or engineering work are what drive higher pay over time.</p>
+<p>The recommendations below translate those results:</p>
+</section>
+<section id="where-to-apply" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-apply">Where to Apply</h2>
+<div id="analyst-employers-states" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>top_employers <span class="op">=</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    analyst[<span class="st">"COMPANY_NAME"</span>]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">8</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    .rename_axis(<span class="st">"Employer"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    .reset_index(name<span class="op">=</span><span class="st">"Analyst Postings"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>top_states <span class="op">=</span> (</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    analyst[<span class="st">"STATE_NAME"</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    .replace(<span class="st">"Unknown"</span>, pd.NA)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    .dropna()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">6</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    .rename_axis(<span class="st">"State"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    .reset_index(name<span class="op">=</span><span class="st">"Analyst Postings"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>display(top_employers)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>display(top_states)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="analyst-employers-states-1" class="cell-output cell-output-display">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Employer</th>
+<th data-quarto-table-cell-role="th">Analyst Postings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Oracle</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Microsoft</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Salesforce</td>
+<td>18</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Autodesk</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Scadea Solutions</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>Afterpay</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>Dynatrace</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Workday</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div id="analyst-employers-states-2" class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Analyst Postings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>California</td>
+<td>70</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>New York</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Washington</td>
+<td>18</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Texas</td>
+<td>16</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Illinois</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>Massachusetts</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Analyst hiring is spread across more employers than the market overall, where Oracle accounts for about 39% of postings. Among analyst roles, Oracle, Microsoft, and Salesforce post the most, followed by Autodesk, so a student does not need to depend on a single company. California has by far the most analyst postings (70 of 245), with New York, Washington, Texas, Illinois, and Massachusetts well behind, and about a quarter of analyst postings are classified as fully remote, which opens up employers outside these states as well.</p>
+</section>
+<section id="what-to-learn-first" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-learn-first">What to Learn First</h2>
+<p>The Skill Gap Analysis ranked learning priorities using demand across all 1,016 postings. Because the scorecard points to analyst roles as the best starting point, we recalculated the same learning-priority score using only Data / BI Analyst postings.</p>
+<div id="analyst-skill-priorities" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SKILL_COLUMNS <span class="op">=</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Python"</span>: <span class="st">"skill_python"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SQL"</span>: <span class="st">"skill_sql"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Machine Learning"</span>: <span class="st">"skill_machine_learning"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Statistics"</span>: <span class="st">"skill_statistics"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AWS"</span>: <span class="st">"skill_aws"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Azure"</span>: <span class="st">"skill_azure"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GCP"</span>: <span class="st">"skill_gcp"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Tableau"</span>: <span class="st">"skill_tableau"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Power BI"</span>: <span class="st">"skill_power_bi"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Excel"</span>: <span class="st">"skill_excel"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Spark"</span>: <span class="st">"skill_spark"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>member_columns <span class="op">=</span> [<span class="st">"Dylan Thomson"</span>, <span class="st">"Richard Wu"</span>, <span class="st">"Sae Hee Wilson"</span>]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>priorities <span class="op">=</span> team_ratings[[<span class="st">"Skill"</span>] <span class="op">+</span> member_columns].copy()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>priorities[<span class="st">"Team Average"</span>] <span class="op">=</span> priorities[member_columns].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>priorities[<span class="st">"</span><span class="sc">% o</span><span class="st">f Analyst Postings"</span>] <span class="op">=</span> priorities[<span class="st">"Skill"</span>].<span class="bu">map</span>(</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> skill: analyst[SKILL_COLUMNS[skill]].mean() <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Same scoring approach as the Skill Gap Analysis page</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>priorities[<span class="st">"Learning Priority"</span>] <span class="op">=</span> (</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    priorities[<span class="st">"</span><span class="sc">% o</span><span class="st">f Analyst Postings"</span>] <span class="op">*</span> (<span class="dv">5</span> <span class="op">-</span> priorities[<span class="st">"Team Average"</span>]) <span class="op">/</span> <span class="dv">4</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>priorities <span class="op">=</span> priorities.sort_values(<span class="st">"Learning Priority"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    priorities.sort_values(<span class="st">"Learning Priority"</span>),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"Learning Priority"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"Skill"</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    orientation<span class="op">=</span><span class="st">"h"</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Learning Priorities for Data / BI Analyst Roles"</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    hover_data<span class="op">=</span>[<span class="st">"</span><span class="sc">% o</span><span class="st">f Analyst Postings"</span>, <span class="st">"Team Average"</span>],</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    template<span class="op">=</span>PLOT_TEMPLATE,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>fig.update_layout(showlegend<span class="op">=</span><span class="va">False</span>, yaxis_title<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>priorities.<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="analyst-skill-priorities-1" class="cell-output cell-output-display">
+<div style="height:525px; width:100%;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-4.1.1.min.js" integrity="sha256-O24V1F27f8pb0glCkelh3cVHLNiHAJ5gCaVtq2aNch8=" crossorigin="anonymous"></script>                <div id="4ed499cf-d2a3-4989-b48e-f5c1749d059d" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("4ed499cf-d2a3-4989-b48e-f5c1749d059d")) {                    Plotly.newPlot(                        "4ed499cf-d2a3-4989-b48e-f5c1749d059d",                        [{"customdata":{"dtype":"f8","bdata":"wcspeDkFL0AAAAAAAAAUQOYUvJyCl\u002fM\u002fAAAAAAAA8D8VvJyCl1MAQAAAAAAAAABAiMb60FgfCkAAAAAAAADwP7dt27Zt2xZAAAAAAAAA8D+8nIKXU\u002fAqQAAAAAAAAPA\u002fvJyCl1PwOkAAAAAAAAAIQKfg5RS8nD5AAAAAAAAACEA\u002fNNaHxvpCQKuqqqqqqgpAt23btm3bRkCrqqqqqqoCQCp4OQUvp1FAAAAAAAAACEA=","shape":"11, 2"},"hovertemplate":"Learning Priority=%{x}\u003cbr\u003eSkill=%{y}\u003cbr\u003e% of Analyst Postings=%{customdata[0]}\u003cbr\u003eTeam Average=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","orientation":"h","showlegend":false,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAAAAAADmFLycgpfzPyAa60Njffg\u002fiMb60FgfCkC3bdu2bdsWQLycgpdT8CpAvJyCl1PwKkCn4OUUvJwuQGisD431oS9Anud5nud5PkAqeDkFL6dBQA=="},"xaxis":"x","y":["Excel","GCP","Spark","AWS","Azure","Machine Learning","Statistics","Power BI","Python","Tableau","SQL"],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","margin":{"b":0,"l":0,"r":0,"t":30},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Learning Priority"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":""}},"legend":{"tracegroupgap":0},"title":{"text":"Learning Priorities for Data \u002f BI Analyst Roles"},"barmode":"relative","showlegend":false},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('4ed499cf-d2a3-4989-b48e-f5c1749d059d');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+<div id="analyst-skill-priorities-2" class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Skill</th>
+<th data-quarto-table-cell-role="th">Dylan Thomson</th>
+<th data-quarto-table-cell-role="th">Richard Wu</th>
+<th data-quarto-table-cell-role="th">Sae Hee Wilson</th>
+<th data-quarto-table-cell-role="th">Team Average</th>
+<th data-quarto-table-cell-role="th">% of Analyst Postings</th>
+<th data-quarto-table-cell-role="th">Learning Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>SQL</td>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>3.0</td>
+<td>70.6</td>
+<td>35.3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Tableau</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>2.3</td>
+<td>45.7</td>
+<td>30.5</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Python</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>3.3</td>
+<td>38.0</td>
+<td>15.8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">8</th>
+<td>Power BI</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>3.0</td>
+<td>30.6</td>
+<td>15.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Machine Learning</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1.0</td>
+<td>13.5</td>
+<td>13.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Statistics</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>3.0</td>
+<td>26.9</td>
+<td>13.5</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>Azure</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1.0</td>
+<td>5.7</td>
+<td>5.7</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>AWS</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1.0</td>
+<td>3.3</td>
+<td>3.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>Spark</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>1.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>GCP</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1.0</td>
+<td>1.2</td>
+<td>1.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">9</th>
+<td>Excel</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5.0</td>
+<td>15.5</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Focusing on analyst roles makes the priorities sharper than they were for the market as a whole. SQL appears in about 71% of analyst postings and Tableau in about 46%, compared with about 24% and 13% across all postings, and because our team’s average ratings for both are moderate or lower, they come out as clear first priorities. Python and Power BI form a second tier, appearing in roughly a third of analyst postings. Machine Learning and the cloud platforms appear in fewer than 15% of analyst postings, so for someone targeting a first analyst role they are better treated as longer-term skills for moving toward architecture, engineering, or data science work later.</p>
+</section>
+<section id="how-to-position-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-position-yourself">How to Position Yourself</h2>
+<p>Beyond technical skills, analyst postings frequently list data analysis, communication, dashboards, and business intelligence, which suggests employers want candidates who can turn data into something a business audience can use. A portfolio that shows a complete piece of work, such as cleaning a dataset, building a dashboard in Tableau or Power BI, and writing up the findings, is likely to be more convincing than a list of tools.</p>
+<p>Candidates who already have experience with ERP systems or a business function such as finance, HR, or supply chain may also want to look at Consultant/Implementation roles. These roles are the largest segment in the data and pay a similar median salary to analyst roles, but they usually ask for about six years of experience, and most are at Oracle, so they tend to suit people moving over from an industry role rather than students entering the field.</p>
+</section>
+<section id="next-steps-for-our-team" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps-for-our-team">Next Steps for Our Team</h2>
+<p>Using the analyst-focused priorities above together with each member’s self-ratings:</p>
+<ul>
+<li><strong>Dylan Thomson</strong> already rates himself highly in Tableau, Power BI, and Statistics, so his biggest gain would come from SQL, which he currently rates at 2 and which appears in most analyst postings.</li>
+<li><strong>Richard Wu</strong> is strongest in SQL and Python, so building Tableau or Power BI skills would round out his profile for analyst roles, with Statistics as a secondary focus.</li>
+<li><strong>Sae Hee Wilson</strong> rates herself as intermediate in SQL, Python, Statistics, and Power BI, and her largest gap for analyst roles is Tableau, which she currently rates at 1, followed by moving SQL from intermediate toward advanced.</li>
+</ul>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>These recommendations come from one five-month window of postings in 2024 within a single industry code, so they describe that market rather than data careers in general. Role segments are based on job-title keywords, salary data is missing for about a third of postings, remote status is missing for most of them, and the skill gaps are based on our own self-ratings, so another student following this approach should substitute their own ratings to get priorities that fit them.</p>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->
