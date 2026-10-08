@@ -233,3 +233,4 @@ data/module3/*
 !data/module3/team_skill_ratings.csv
 !data/module3/career_market_panel.csv
 !data/module3/career_market_panel_dictionary.csv
+_site/
