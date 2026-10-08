@@ -1,0 +1,36 @@
+variable,description
+ID,Unique posting identifier.
+POSTED,Posting date.
+posted_month,Posting month (YYYY-MM).
+TITLE_RAW,Original job title.
+TITLE_CLEAN,"Lower-cased, cleaned job title."
+role_segment,Job family assigned from title keywords (see notebooks/07_build_career_panel.py).
+COMPANY_NAME,Employer name.
+is_oracle,1 if the employer is Oracle (largest employer in the sample).
+CITY_NAME,City of the posting.
+STATE_NAME,State of the posting.
+remote_clean,"Remote, Hybrid Remote, Not Remote, or Not specified."
+is_remote,1 if classified as fully Remote.
+EMPLOYMENT_TYPE_NAME,Full-time or part-time classification.
+is_full_time,1 if full-time.
+MIN_YEARS_EXPERIENCE,Minimum years of experience required (blank if not stated).
+MAX_YEARS_EXPERIENCE,Maximum years of experience (blank if not stated).
+edu_bachelors,1 if a bachelor's degree is listed.
+edu_masters,1 if a master's degree is listed.
+edu_phd,1 if a Ph.D. or professional degree is listed.
+edu_not_listed,1 if no education requirement is listed.
+SALARY_FROM,Lower bound of posted annual salary.
+SALARY_TO,Upper bound of posted annual salary.
+SALARY_MIDPOINT,Average of SALARY_FROM and SALARY_TO.
+skill_count,Number of standardized skills listed in the posting.
+skill_sql,1 if the posting lists 'SQL (Programming Language)'.
+skill_python,1 if the posting lists 'Python (Programming Language)'.
+skill_tableau,1 if the posting lists 'Tableau (Business Intelligence Software)'.
+skill_power_bi,1 if the posting lists 'Power BI'.
+skill_statistics,1 if the posting lists 'Statistics'.
+skill_machine_learning,1 if the posting lists 'Machine Learning'.
+skill_excel,1 if the posting lists 'Microsoft Excel'.
+skill_azure,1 if the posting lists 'Microsoft Azure'.
+skill_aws,1 if the posting lists 'Amazon Web Services'.
+skill_gcp,1 if the posting lists 'Google Cloud Platform (GCP)'.
+skill_spark,1 if the posting lists 'Apache Spark'.
