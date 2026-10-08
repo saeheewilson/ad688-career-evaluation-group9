@@ -93,6 +93,116 @@ fig.show()
 
 **Oracle accounts for 392 postings**, the largest share in the dataset. Other leading employers include Scadea Solutions, Workday, Microsoft, Salesforce, SAP, and Adobe. Because Oracle contributes a substantial portion of the observations, aggregate market patterns may partly reflect that company's hiring activity.
 
+## What Job Types Are in the Data?
+
+Every posting in this dataset carries the **Data Scientists** occupation label (SOC). However, the job titles show a much wider mix of roles. To make the analysis more useful for a job seeker, each posting was assigned to a **role segment** based on keywords in its job title. The rules are in `notebooks/07_build_career_panel.py`, and the exploration behind them is in `notebooks/explore_titles.ipynb`.
+
+```{python}
+#| label: load-panel
+#| include: false
+
+panel = pd.read_csv("data/module3/career_market_panel.csv")
+```
+
+```{python}
+#| label: postings-by-segment
+
+segment_counts = (
+    panel["role_segment"]
+    .value_counts()
+    .sort_values()
+    .reset_index()
+)
+
+segment_counts.columns = ["Role Segment", "Postings"]
+
+fig = px.bar(
+    segment_counts,
+    x="Postings",
+    y="Role Segment",
+    orientation="h",
+    title="Postings by Role Segment",
+    template=PLOT_TEMPLATE
+)
+
+fig.update_layout(showlegend=False, yaxis_title="")
+fig.show()
+```
+
+Only **5 of the 1,016 postings** have data science or machine learning titles. The largest group is **Consultant / Implementation (391 postings, 38.5%)**, mostly ERP and cloud-application consulting roles, many at Oracle. **Data / BI Analyst** roles are the second largest group with **245 postings (24.1%)** and are the most direct entry point for students targeting this pathway.
+
+```{python}
+#| label: segment-summary-table
+
+segment_summary = (
+    panel.groupby("role_segment")
+    .agg(
+        Postings=("ID", "size"),
+        Postings_with_Salary=("SALARY_MIDPOINT", "count"),
+        Median_Salary=("SALARY_MIDPOINT", "median"),
+        Median_Min_Experience=("MIN_YEARS_EXPERIENCE", "median"),
+        Pct_Remote=("is_remote", "mean"),
+    )
+    .sort_values("Postings", ascending=False)
+    .reset_index()
+)
+
+segment_summary["Pct_Remote"] = (segment_summary["Pct_Remote"] * 100).round(1)
+segment_summary["Median_Salary"] = segment_summary["Median_Salary"].round(0)
+
+segment_summary.columns = [
+    "Role Segment",
+    "Postings",
+    "Postings with Salary",
+    "Median Salary ($)",
+    "Median Min. Experience (yrs)",
+    "% Remote",
+]
+
+segment_summary
+```
+
+```{python}
+#| label: salary-by-segment
+
+salary_by_segment = panel.dropna(subset=["SALARY_MIDPOINT"])
+
+segment_order = (
+    salary_by_segment
+    .groupby("role_segment")["SALARY_MIDPOINT"]
+    .median()
+    .sort_values()
+    .index
+    .tolist()
+)
+
+fig = px.box(
+    salary_by_segment,
+    x="SALARY_MIDPOINT",
+    y="role_segment",
+    category_orders={"role_segment": segment_order},
+    points=False,
+    title="Salary Midpoint by Role Segment",
+    labels={
+        "SALARY_MIDPOINT": "Annual Salary Midpoint ($)",
+        "role_segment": ""
+    },
+    template=PLOT_TEMPLATE
+)
+
+fig.show()
+```
+
+Pay and entry requirements differ sharply by segment:
+
+- **Architect / Engineer** roles pay the most (median about **$187,550**) but also ask for the most experience (median **8 years**).
+- **Data / BI Analyst** roles have a median salary of about **$130,000** with the lowest typical experience requirement (median **4 years**), and about **24%** are fully remote.
+- **Consultant / Implementation** roles pay a similar median (about **$127,900**) but typically ask for **6 years** of experience.
+- **AI Data Trainer** postings are the lowest paid (median about **$83,200**) and are often part-time.
+- The **Data Scientist / ML** segment is too small (5 postings, 3 with salary) to draw conclusions from.
+
+Because of this mix, overall results for the dataset, such as the $132,550 median salary, describe the full Data Scientist–classified market rather than data scientist jobs specifically. Later sections compare these segments directly.
+
 ## Geographic Distribution
 
 The postings are distributed across several major technology and business markets.
